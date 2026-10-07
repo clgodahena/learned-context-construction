@@ -1,0 +1,60 @@
+{
+  "experiment": "injected_learned",
+  "config": {
+    "experiment": "injected_learned",
+    "results_dir": "results",
+    "stream": {
+      "kind": "injected",
+      "base": {
+        "kind": "make_classification",
+        "n": 12000,
+        "n_features": 8,
+        "pos_rate": 0.5,
+        "seed": 0
+      },
+      "drift_points": [
+        3000,
+        6000
+      ],
+      "mechanism": "feature_rotation",
+      "drift_kind": "abrupt",
+      "recurring": true,
+      "target_pos_rate": 0.15,
+      "positive_class": 1
+    },
+    "selector": {
+      "name": "learned_policy",
+      "candidate_pool": 4000,
+      "lr": 0.05,
+      "positive_class": 1
+    },
+    "classifier": {
+      "name": "reference",
+      "kind": "gnb"
+    },
+    "run": {
+      "k": 300,
+      "capacity": 4000,
+      "warmup": 300,
+      "label_delay": 0,
+      "positive_class": 1,
+      "metric_window": 1000,
+      "snapshot_every": 200,
+      "time_it": true
+    }
+  },
+  "summary": {
+    "n": 4700,
+    "accuracy": 0.895531914893617,
+    "balanced_accuracy": 0.7034328779695718,
+    "kappa_m": 0.3084507042253526,
+    "kappa_temporal": 0.59463622467804,
+    "windowed_auprc": 0.8214578043020535,
+    "per_class_recall": [
+      0.9786967418546366,
+      0.428169014084507
+    ],
+    "latency_ms_p50": 2.6148775000365276,
+    "latency_ms_p95": 3.361788699999124
+  }
+}

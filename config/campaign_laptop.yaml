@@ -1,0 +1,59 @@
+# Laptop-tractable campaign (Apple Silicon / MPS).
+#
+# The full campaign.yaml (full-length streams x 5 selectors x 4 conditions x 3
+# seeds) is many DAYS of TabPFN compute on a laptop. This reduced config trades
+# rigour for a result you can get overnight, as a FIRST PASS. Scale it back up
+# (seeds: [0,1,2], remove run.max_steps, k: 512, add imbalance levels) once you
+# have a CUDA GPU or a longer compute window, using --resume to continue.
+#
+# Ballpark at ~3 instances/s (k=256, MPS): ~8 TabPFN trials x ~25 min ≈ 3-4 h.
+name: laptop
+results_dir: results/campaign
+
+seeds: [0]                 # single seed first; add more later for mean+/-std
+
+run:
+  k: 256                   # smaller context -> much faster per instance
+  capacity: 3000
+  warmup: 300
+  metric_window: 1000
+  snapshot_every: 500
+  positive_class: 1
+  max_steps: 6000          # cap stream length per trial (big time lever)
+
+classifier:
+  name: tabpfn             # set to "reference" for a seconds-long wiring check
+  device: null             # null -> auto (MPS on Apple Silicon)
+  max_context: 256
+
+datasets:
+  - name: electricity                        # first ~6000 instances of the real stream
+    stream: {kind: electricity}
+    imbalance: [null]
+    drift_jitter: 0
+  - name: synth_rotate                       # fully covered within 6000 steps
+    stream:
+      kind: injected
+      base: {kind: make_classification, n: 6000, n_features: 8, pos_rate: 0.5}
+      drift_points: [2000, 4000]             # 2 drifts within the cap
+      mechanism: feature_rotation
+      recurring: true
+    imbalance: [0.15]                        # one imbalance level for the first pass
+    drift_jitter: 200
+
+selectors:                                   # dropped 'random' to save time
+  - {name: sliding_window}
+  - {name: similarity, candidate_pool: 3000}
+  - {name: class_ratio, target_pos_ratio: 0.4}
+  - name: learned_policy                     # tuned config from E2/E3 (reference-tuned)
+    candidate_pool: 3000
+    update_rule: policy_gradient
+    sigma: 0.25
+    entropy_reg: 0.02
+    lr: 0.02
+    reward_mode: instance
+
+direct:                                      # fast (not TabPFN)
+  - {name: online_bagging, n_models: 10}
+  - {name: river_arf, n_models: 10}
+  - {name: river_srp, n_models: 10}

@@ -1,0 +1,33 @@
+# Direct streaming baseline (non-in-context): Adaptive Random Forest.
+# Offline default is the always-available online-bagging stand-in. On the
+# workstation set classifier.name: river_arf (or capymoa_arf / capymoa_srp)
+# after `pip install -r requirements-streaming.txt`.
+experiment: direct_arf
+results_dir: results
+mode: direct
+
+stream:
+  kind: injected
+  base:
+    kind: make_classification    # -> electricity on the workstation
+    n: 12000
+    n_features: 8
+    pos_rate: 0.5
+    seed: 0
+  drift_points: [3000, 6000]
+  mechanism: feature_rotation
+  recurring: true
+  target_pos_rate: 0.15
+  positive_class: 1
+
+classifier:
+  name: online_bagging           # -> river_arf | river_srp | capymoa_arf | capymoa_srp
+  n_models: 10
+  reset_every: 2000
+
+run:
+  warmup: 300
+  positive_class: 1
+  metric_window: 1000
+  snapshot_every: 200
+  time_it: true

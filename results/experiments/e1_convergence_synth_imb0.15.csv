@@ -1,0 +1,5 @@
+length,best_baseline,best_base_bal_acc,policy_bal_acc,gap,w_temporal,w_feature,w_class,weight_stability_std
+2000,class_ratio,0.6536,0.5998,0.0538,0.11,0.534,0.356,0.0771
+4000,class_ratio,0.6791,0.6441,0.035,0.379,0.175,0.446,0.0971
+8000,class_ratio,0.7561,0.7106,0.0455,0.178,0.411,0.411,0.119
+16000,similarity,0.7478,0.723,0.0247,0.663,0.216,0.121,0.0857

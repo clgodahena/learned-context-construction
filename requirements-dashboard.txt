@@ -1,0 +1,7 @@
+# Interactive dashboard (optional). The static HTML report (scripts/make_report.py)
+# needs nothing beyond the standard library; only the Streamlit app needs these.
+# Install with:  pip install -r requirements-dashboard.txt
+streamlit>=1.30
+pandas>=2.0
+openpyxl>=3.1
+matplotlib>=3.7

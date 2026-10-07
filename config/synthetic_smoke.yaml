@@ -1,0 +1,30 @@
+# Offline smoke config: synthetic drifting + imbalanced stream, reference
+# classifier. No GPU, no downloads -- validates the whole pipeline anywhere.
+experiment: synthetic_smoke
+results_dir: results
+
+stream:
+  kind: synthetic
+  n: 8000
+  n_features: 6
+  drift_points: [2500, 5000]   # ground-truth abrupt drift locations
+  pos_rate: 0.2                # imbalanced
+  drift_kind: abrupt
+  seed: 0
+
+selector:
+  name: sliding_window
+
+classifier:
+  name: reference
+  kind: gnb
+
+run:
+  k: 400
+  capacity: 2000
+  warmup: 200
+  label_delay: 0
+  positive_class: 1
+  metric_window: 800
+  snapshot_every: 100
+  time_it: true

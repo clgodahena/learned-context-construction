@@ -1,0 +1,50 @@
+[
+  {
+    "selector": "random",
+    "balanced_accuracy": 0.5946339385045092,
+    "kappa_temporal": 0.37069490243329856,
+    "windowed_auprc": 0.22933538602650316,
+    "minority_recall": 0.24950884086444008,
+    "latency_ms_p50": 1.4999499999248656
+  },
+  {
+    "selector": "sliding_window",
+    "balanced_accuracy": 0.6690475920938388,
+    "kappa_temporal": 0.5551170455434681,
+    "windowed_auprc": 0.46785114399402616,
+    "minority_recall": 0.3614931237721022,
+    "latency_ms_p50": 1.4375110004039016
+  },
+  {
+    "selector": "similarity",
+    "balanced_accuracy": 0.7088973473118578,
+    "kappa_temporal": 0.5857594939371578,
+    "windowed_auprc": 0.5176496697206744,
+    "minority_recall": 0.44695481335952847,
+    "latency_ms_p50": 2.494362999641453
+  },
+  {
+    "selector": "class_ratio",
+    "balanced_accuracy": 0.7124161633293231,
+    "kappa_temporal": 0.41438876403170805,
+    "windowed_auprc": 0.47275349816219664,
+    "minority_recall": 0.5196463654223968,
+    "latency_ms_p50": 1.634172000194667
+  },
+  {
+    "selector": "learned_policy",
+    "balanced_accuracy": 0.6783418803770648,
+    "kappa_temporal": 0.3241637770947329,
+    "windowed_auprc": 0.475020943848152,
+    "minority_recall": 0.47053045186640474,
+    "latency_ms_p50": 2.98452399965754
+  },
+  {
+    "selector": "online_bagging*",
+    "balanced_accuracy": 0.6844180343137305,
+    "kappa_temporal": 0.4660269641025553,
+    "windowed_auprc": 0.42689708591544434,
+    "minority_recall": 0.43222003929273084,
+    "latency_ms_p50": 0.7191869999587652
+  }
+]

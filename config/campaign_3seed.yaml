@@ -1,0 +1,66 @@
+# Definitive 3-seed campaign — matched, error-barred comparison of ALL methods.
+#
+# Supersedes the single-seed campaign_laptop run. Requires the run_campaign.py
+# fix that threads the trial seed into the selector, so the learned policy's
+# exploration RNG genuinely varies per seed (previously it did not, which made
+# the Electricity seeds identical). Every method is evaluated on the SAME three
+# seeds, so policy-vs-fixed comparisons are matched draw-for-draw and carry a
+# mean +/- std.
+#
+# synth_rotate is listed FIRST deliberately: it is the differentiated dataset
+# where the comparison actually matters, and it finishes first (~5-6 h). You can
+# stop after it and continue Electricity later with --resume (~9-10 h more).
+#
+# Cost: 4 in-context selectors x 3 seeds x 2 datasets ~= 24 TabPFN trials
+# (ensembles are fast). Roughly 15 h total at ~0.5 s/instance; ~5-6 h to the
+# end of synth_rotate.
+name: campaign_3seed
+results_dir: results/campaign
+
+seeds: [0, 1, 2]
+
+run:
+  k: 256
+  capacity: 3000
+  warmup: 300
+  metric_window: 1000
+  snapshot_every: 500
+  positive_class: 1
+  max_steps: 6000
+
+classifier:
+  name: tabpfn
+  device: null
+  max_context: 256
+
+datasets:
+  - name: synth_rotate                       # decisive comparison — runs first
+    stream:
+      kind: injected
+      base: {kind: make_classification, n: 6000, n_features: 8, pos_rate: 0.5}
+      drift_points: [2000, 4000]
+      mechanism: feature_rotation
+      recurring: true
+    imbalance: [0.15]
+    drift_jitter: 200
+  - name: electricity
+    stream: {kind: electricity}
+    imbalance: [null]
+    drift_jitter: 0
+
+selectors:
+  - {name: sliding_window}
+  - {name: similarity, candidate_pool: 3000}
+  - {name: class_ratio, target_pos_ratio: 0.4}
+  - name: learned_policy
+    candidate_pool: 3000
+    update_rule: policy_gradient
+    sigma: 0.25
+    entropy_reg: 0.02
+    lr: 0.02
+    reward_mode: instance
+
+direct:
+  - {name: online_bagging, n_models: 10}
+  - {name: river_arf, n_models: 10}
+  - {name: river_srp, n_models: 10}

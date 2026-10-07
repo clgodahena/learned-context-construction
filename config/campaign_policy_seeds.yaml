@@ -1,0 +1,57 @@
+# Policy-only multi-seed run — error bars on the one stochastic method.
+#
+# The fixed selectors (sliding_window, similarity, class_ratio) and the streaming
+# ensembles are deterministic under TabPFN, so re-running them across seeds would
+# only burn TabPFN compute to reproduce identical numbers (std = 0). This config
+# therefore runs ONLY the learned_policy, across 3 seeds, on both datasets, to
+# put a mean +/- std on the single stochastic result that matters for the thesis.
+#
+# Seed 0 is included so summary.csv is self-contained (mean/std over 3 seeds) and
+# to re-confirm the seed-0 value from the main campaign reproduces exactly.
+#
+# Cost: learned_policy x 3 seeds x 2 datasets, TabPFN, capped at 6000 steps
+# (~5700 + ~3226 scored per seed) at ~0.5 s/instance -> roughly 3.5-4 hours.
+name: policy_seeds
+results_dir: results/campaign
+
+seeds: [0, 1, 2]
+
+run:
+  k: 256
+  capacity: 3000
+  warmup: 300
+  metric_window: 1000
+  snapshot_every: 500
+  positive_class: 1
+  max_steps: 6000
+
+classifier:
+  name: tabpfn
+  device: null
+  max_context: 256
+
+datasets:
+  - name: electricity
+    stream: {kind: electricity}
+    imbalance: [null]
+    drift_jitter: 0
+  - name: synth_rotate
+    stream:
+      kind: injected
+      base: {kind: make_classification, n: 6000, n_features: 8, pos_rate: 0.5}
+      drift_points: [2000, 4000]
+      mechanism: feature_rotation
+      recurring: true
+    imbalance: [0.15]
+    drift_jitter: 200               # onset resampled per seed -> genuine variance
+
+selectors:
+  - name: learned_policy            # tuned config (matches campaign_laptop.yaml)
+    candidate_pool: 3000
+    update_rule: policy_gradient
+    sigma: 0.25
+    entropy_reg: 0.02
+    lr: 0.02
+    reward_mode: instance
+
+direct: []                          # deterministic baselines not re-run here

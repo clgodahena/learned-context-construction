@@ -1,0 +1,7 @@
+# Real in-context classifier (workstation / GPU).
+# TabPFN v2 (Hollmann et al., 2025, Nature 637). Downloads model weights from
+# HuggingFace on first use and is subject to the TabPFN licence. A CUDA GPU is
+# strongly recommended for stream-scale throughput; CPU works but is slow.
+# Install with:  pip install -r requirements-tabpfn.txt
+tabpfn>=2.0
+torch>=2.1

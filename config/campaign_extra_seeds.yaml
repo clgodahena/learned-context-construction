@@ -1,0 +1,67 @@
+# Error-bar extension for the two additional real benchmarks (Airlines, Covertype).
+#
+# WHY THIS EXISTS
+# campaign_extra_datasets.yaml ran every approach at a single seed. On a fixed
+# real stream the *deterministic* selectors (sliding_window, similarity,
+# class_ratio) and the streaming ensembles (online_bagging, river_arf,
+# river_srp) reproduce identical results at every seed — their run-to-run
+# variance is exactly zero by construction, so their single-seed numbers are
+# already final. Only the LEARNED POLICY is stochastic (its exploration RNG is
+# threaded from the trial seed), so only the policy needs repeated runs to earn
+# an honest mean +/- std.
+#
+# This config therefore runs the learned policy alone, over seeds [0, 1, 2], on
+# the two datasets. Seed 0 re-runs deliberately: it must reproduce the
+# campaign_extra_datasets seed-0 policy numbers (airlines bal_acc ~0.555,
+# covertype ~0.893) byte-for-byte — a free correctness check that the pipeline
+# is unchanged — while seeds 1 and 2 supply the variance.
+#
+# Cost: 1 selector x 2 datasets x 3 seeds = 6 TabPFN trials, ~4.5-5 h.
+#
+# Run (fresh, no --resume needed; writes its own results dir):
+#   python -m scripts.run_campaign --config config/campaign_extra_seeds.yaml
+#
+# After it completes the policy's 3-seed statistics are merged with the
+# variance-free seed-0 rows of the deterministic selectors / ensembles from
+# campaign_extra_datasets for the final Chapter 7 comparison tables and charts.
+name: extra_seeds
+results_dir: results/campaign
+
+seeds: [0, 1, 2]
+
+run:
+  k: 256
+  capacity: 3000
+  warmup: 300
+  metric_window: 1000
+  snapshot_every: 500
+  positive_class: 1
+  max_steps: 6000
+
+classifier:
+  name: tabpfn
+  device: null
+  max_context: 256
+
+datasets:
+  - name: airlines
+    stream: {kind: openml, name: airlines, version: 1, target_positive: "1"}
+    imbalance: [null]           # natural class balance
+    drift_jitter: 0
+  - name: covertype
+    stream: {kind: covertype}
+    imbalance: [null]
+    drift_jitter: 0
+
+selectors:
+  - name: learned_policy
+    candidate_pool: 3000
+    update_rule: policy_gradient
+    sigma: 0.25
+    entropy_reg: 0.02
+    lr: 0.02
+    reward_mode: instance
+
+# No deterministic selectors and no direct ensembles here — their seed-0 numbers
+# in campaign_extra_datasets are already final (zero variance by construction).
+direct: []

@@ -1,0 +1,42 @@
+# Learned policy on an injected-drift, imbalanced stream.
+# Offline-runnable (make_classification base + reference classifier). On the
+# workstation, set stream.base.kind: electricity and classifier.name: tabpfn.
+experiment: injected_learned
+results_dir: results
+
+stream:
+  kind: injected
+  base:
+    kind: make_classification    # -> electricity for the real run
+    n: 12000
+    n_features: 8
+    pos_rate: 0.5
+    seed: 0
+  drift_points: [3000, 6000]
+  mechanism: feature_rotation    # or label_flip
+  drift_kind: abrupt
+  recurring: true                # concept 0 returns -> rewards memory
+  target_pos_rate: 0.15          # severe imbalance
+  positive_class: 1
+
+selector:
+  name: learned_policy
+  candidate_pool: 4000
+  lr: 0.05
+  positive_class: 1
+  # init_weights: [0.34, 0.33, 0.33]   # optional; default uniform
+  # freeze: true                        # ablation: multi-signal but not learned
+
+classifier:
+  name: reference                # -> tabpfn on the workstation
+  kind: gnb
+
+run:
+  k: 300
+  capacity: 4000
+  warmup: 300
+  label_delay: 0
+  positive_class: 1
+  metric_window: 1000
+  snapshot_every: 200
+  time_it: true

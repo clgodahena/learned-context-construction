@@ -1,0 +1,11 @@
+{
+  "substrate": "ref",
+  "seed": 0,
+  "device": "reference/cpu",
+  "pred_hashes": {
+    "sliding_window": "8f9e76d18cab3614",
+    "similarity": "8d353e566473a330",
+    "class_ratio": "3d9c252692252f57",
+    "learned_policy": "1ba1af202739de05"
+  }
+}

@@ -1,0 +1,60 @@
+# External-validity extension — two additional real benchmarks from the proposal's
+# data plan (Airlines and Covertype), to broaden the operating-envelope evidence
+# beyond Electricity and remove the "single real dataset" limitation.
+#
+# Both are binary (Airlines: delayed vs not; Covertype: majority cover-type vs rest)
+# and drop straight into the binary harness. Both are very large, so the streams are
+# capped at 6,000 instances via run.max_steps — the same cap used for the main
+# campaign, keeping trials comparable and tractable.
+#
+# First pass is a single seed (real streams are fixed; the deterministic selectors
+# are identical across seeds, and this gives one policy realisation per dataset).
+# To error-bar the stochastic learned policy on these datasets as well, set
+# seeds: [0, 1, 2] later — but note that triples the (already multi-hour) TabPFN cost.
+#
+# Cost: 4 in-context selectors x 2 datasets x 1 seed = 8 TabPFN trials, ~6-7 h.
+name: extra_datasets
+results_dir: results/campaign
+
+seeds: [0]
+
+run:
+  k: 256
+  capacity: 3000
+  warmup: 300
+  metric_window: 1000
+  snapshot_every: 500
+  positive_class: 1
+  max_steps: 6000
+
+classifier:
+  name: tabpfn
+  device: null
+  max_context: 256
+
+datasets:
+  - name: airlines
+    stream: {kind: openml, name: airlines, version: 1, target_positive: "1"}
+    imbalance: [null]           # use the stream's natural class balance
+    drift_jitter: 0
+  - name: covertype
+    stream: {kind: covertype}
+    imbalance: [null]
+    drift_jitter: 0
+
+selectors:
+  - {name: sliding_window}
+  - {name: similarity, candidate_pool: 3000}
+  - {name: class_ratio, target_pos_ratio: 0.4}
+  - name: learned_policy
+    candidate_pool: 3000
+    update_rule: policy_gradient
+    sigma: 0.25
+    entropy_reg: 0.02
+    lr: 0.02
+    reward_mode: instance
+
+direct:
+  - {name: online_bagging, n_models: 10}
+  - {name: river_arf, n_models: 10}
+  - {name: river_srp, n_models: 10}

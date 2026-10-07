@@ -1,0 +1,43 @@
+{
+  "experiment": "electricity_sliding",
+  "config": {
+    "experiment": "electricity_sliding",
+    "results_dir": "results",
+    "stream": {
+      "kind": "electricity"
+    },
+    "selector": {
+      "name": "sliding_window"
+    },
+    "classifier": {
+      "name": "tabpfn",
+      "device": null,
+      "max_context": 4096
+    },
+    "run": {
+      "k": 256,
+      "capacity": null,
+      "warmup": 200,
+      "label_delay": 0,
+      "positive_class": 1,
+      "metric_window": 1000,
+      "snapshot_every": 250,
+      "time_it": true,
+      "max_steps": null
+    }
+  },
+  "summary": {
+    "n": 4800,
+    "accuracy": 0.9633333333333334,
+    "balanced_accuracy": 0.9611921708804653,
+    "kappa_m": 0.9048134126554895,
+    "kappa_temporal": 0.770282854656223,
+    "windowed_auprc": 0.9842082898431688,
+    "per_class_recall": [
+      0.9705184683158251,
+      0.9518658734451054
+    ],
+    "latency_ms_p50": 498.06179200822953,
+    "latency_ms_p95": 527.7647913550027
+  }
+}

@@ -1,0 +1,57 @@
+# Experiment campaign: approaches x datasets x imbalance x seeds.
+#
+# Offline default (reference substrate + online-bagging stand-in) runs anywhere.
+# To run the real campaign on the workstation, make three edits:
+#   1. classifier.name: tabpfn          (the in-context substrate)
+#   2. uncomment river_arf / river_srp   under `direct`
+#   3. uncomment the electricity dataset block
+# YAML is indentation-sensitive: every '- ' item under a key must line up at the
+# SAME number of spaces (here, 2). Mixing 2 and 3 spaces is a parse error.
+# Then:  python -m scripts.run_campaign --config config/campaign.yaml
+name: pilot
+results_dir: results/campaign
+
+seeds: [0, 1, 2]            # repeated randomised runs (drift onset resampled per seed)
+
+run:
+  k: 512
+  capacity: 4000
+  warmup: 300
+  metric_window: 1000
+  snapshot_every: 500
+  positive_class: 1
+  max_steps: null
+
+# Frozen in-context substrate shared by all context selectors.
+classifier:
+  name: tabpfn           # set to "reference" for a fast, CPU-only smoke sweep
+  device: null           # null -> auto (MPS on Apple Silicon, else CPU)
+  max_context: 4096
+
+datasets:
+  - name: electricity                        # workstation (needs OpenML/network)
+    stream: {kind: electricity}
+    imbalance: [null]                        # native class rate
+    drift_jitter: 0
+  - name: synth_rotate
+    stream:
+      kind: injected
+      base: {kind: make_classification, n: 12000, n_features: 8, pos_rate: 0.5}
+      drift_points: [3000, 6000, 9000]
+      mechanism: feature_rotation
+      recurring: true                        # concept 0 returns -> rewards memory
+    imbalance: [0.30, 0.15, 0.05]            # sweep severity of imbalance
+    drift_jitter: 300                        # resample onset +/- 300 per seed
+
+selectors:                                   # in-context (use classifier above)
+  - {name: sliding_window}
+  - {name: similarity, candidate_pool: 4000}
+  - {name: class_ratio, target_pos_ratio: 0.4}
+  - {name: learned_policy, candidate_pool: 4000}
+  - {name: random}
+
+direct:                                      # end-to-end streaming baselines
+  - {name: online_bagging, n_models: 10}
+  - {name: river_arf, n_models: 10}          # needs: pip install river
+  - {name: river_srp, n_models: 10}
+  # - {name: capymoa_arf, ensemble_size: 30} # needs: pip install capymoa + JDK

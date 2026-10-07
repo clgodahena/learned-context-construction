@@ -1,0 +1,6 @@
+approach,overall,balanced,drift,imbalanced,recurring
+sliding_window,0.9239,0.9475,0.9028,0.7914,0.9144
+similarity,0.8641,0.9554,0.7869,0.7904,0.846
+class_ratio,0.9181,0.9422,0.8985,0.8851,0.9173
+learned_policy,0.9009,0.9535,0.8536,0.78,0.8784
+oracle_per_segment,,0.9554,0.9028,0.8851,0.9173

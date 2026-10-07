@@ -1,0 +1,7 @@
+# Streaming baselines & dataset loaders (Phase 1b onward).
+# CapyMOA provides Adaptive Random Forest, Streaming Random Patches, ADWIN and
+# the Electricity/Airlines stream loaders; River provides additional streaming
+# learners and drift detectors.
+# Install with:  pip install -r requirements-streaming.txt
+capymoa>=0.8
+river>=0.21

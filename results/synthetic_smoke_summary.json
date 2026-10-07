@@ -1,0 +1,50 @@
+{
+  "experiment": "synthetic_smoke",
+  "config": {
+    "experiment": "synthetic_smoke",
+    "results_dir": "results",
+    "stream": {
+      "kind": "synthetic",
+      "n": 8000,
+      "n_features": 6,
+      "drift_points": [
+        2500,
+        5000
+      ],
+      "pos_rate": 0.2,
+      "drift_kind": "abrupt",
+      "seed": 0
+    },
+    "selector": {
+      "name": "sliding_window"
+    },
+    "classifier": {
+      "name": "reference",
+      "kind": "gnb"
+    },
+    "run": {
+      "k": 400,
+      "capacity": 2000,
+      "warmup": 200,
+      "label_delay": 0,
+      "positive_class": 1,
+      "metric_window": 800,
+      "snapshot_every": 100,
+      "time_it": true
+    }
+  },
+  "summary": {
+    "n": 7800,
+    "accuracy": 0.7848717948717949,
+    "balanced_accuracy": 0.5461717026286979,
+    "kappa_m": 0.02157434402332384,
+    "kappa_temporal": 0.37114510052665983,
+    "windowed_auprc": 0.4407647100405615,
+    "per_class_recall": [
+      0.972226787181594,
+      0.12011661807580175
+    ],
+    "latency_ms_p50": 0.4182080156169832,
+    "latency_ms_p95": 0.4358791513368487
+  }
+}

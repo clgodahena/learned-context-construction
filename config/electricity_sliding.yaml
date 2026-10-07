@@ -1,0 +1,29 @@
+# Month-2 baseline-reproduction target:
+# TabPFN + sliding-window context on the Electricity benchmark.
+#
+# Swap classifier.name to "reference" for a GPU-free smoke run, or
+# selector.name to "random" for the sanity floor.
+experiment: electricity_sliding
+results_dir: results
+
+stream:
+  kind: electricity          # 45,312 rows, 8 features, binary; positive class = "UP"
+
+selector:
+  name: sliding_window       # recency axis (the Lourenco/Gama baseline)
+
+classifier:
+  name: tabpfn               # use "reference" (kind: gnb|logreg) for CPU/CI
+  device: null               # null -> auto (cuda if available)
+  max_context: 4096
+
+run:
+  k: 256                    # context window size
+  capacity: null             # unbounded historical buffer
+  warmup: 200
+  label_delay: 0
+  positive_class: 1
+  metric_window: 1000
+  snapshot_every: 250
+  time_it: true
+  max_steps: null            # null -> whole stream
