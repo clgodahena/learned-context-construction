@@ -1,0 +1,14 @@
+# scripts/experiments/airlines_signal_check.py — run on the Mac 2026-11-06 (sklearn 1.9, HistGradientBoosting, temporal 80/20 split)
+Airlines: 539,383 rows, target='Delay', pos_rate=0.445
+categorical: ['Airline', 'AirportFrom', 'AirportTo', 'DayOfWeek']   numeric: ['Flight', 'Time', 'Length']
+
+setting                                                 bal_acc   AUROC   AUPRC
+5700-row prefix (thesis cap) | naive ordinal-as-num      0.5754   0.616   0.595
+5700-row prefix (thesis cap) | proper (target-encoded)   0.5862   0.627   0.601
+120,000-row sample           | naive ordinal-as-num      0.6016   0.666   0.469
+120,000-row sample           | proper (target-encoded)   0.5960   0.655   0.457
+
+Verdict: the Airlines signal ceiling for a strong static learner is ~0.60 balanced accuracy / ~0.66 AUROC even with
+proper high-cardinality encoding and 20x more data. Encoding (+~0.01) and the 5,700 cap (+~0.02) do NOT explain the
+near-chance stream result; the dataset is intrinsically low-signal. At the same 5,700 cap the best TabPFN in-context
+selector (similarity 0.577) matched the static ceiling (0.575-0.586). AUPRC fall at 120k is a test-segment base-rate effect.

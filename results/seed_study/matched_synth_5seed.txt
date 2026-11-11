@@ -1,0 +1,25 @@
+# #3 — matched 5-seed synthetic comparison (scratch analysis of runs.csv, 2026-11-07). Note: Wilcoxon floor at n=5 is p=0.0625; use paired-t + bootstrap CI + win count.
+=== SYNTHETIC (TabPFN), balanced accuracy, 5 matched seed-streams ===
+method                s0      s1      s2      s3      s4    mean     SD    95% CI
+learned_policy    0.7953  0.8971  0.9284  0.8268  0.8985   0.8692 0.0557  [0.8223, 0.9102]
+sliding_window    0.8521  0.9044  0.9221  0.9033  0.9124   0.8989 0.0272  [0.8744, 0.9163]
+similarity        0.8367  0.8622  0.9223  0.8629  0.8628   0.8694 0.0316  [0.8472, 0.8984]
+class_ratio       0.8867  0.9305  0.9546  0.9128  0.9442   0.9258 0.0269  [0.9034, 0.9456]
+online_bagging    0.6710  0.7446  0.7387  0.7791  0.8329   0.7533 0.0593  [0.7061, 0.8005]
+river_arf         0.6886  0.6963  0.6607  0.6720  0.7690   0.6973 0.0424  [0.6701, 0.7350]
+river_srp         0.6141  0.6409  0.5589  0.6483  0.7304   0.6385 0.0622  [0.5917, 0.6892]
+
+best fixed rule per seed: ['class_ratio', 'class_ratio', 'class_ratio', 'class_ratio', 'class_ratio']
+
+=== seed-paired comparisons (same stream per seed) ===
+learned_policy − best fixed (per seed)               mean diff -0.0565  CI [-0.0801,-0.0330]  wins 0/5  Wilcoxon p=0.062  paired-t p=0.0139
+learned_policy − sliding_window                      mean diff -0.0296  CI [-0.0587,-0.0032]  wins 1/5  Wilcoxon p=0.125  paired-t p=0.1331
+learned_policy − similarity                          mean diff -0.0002  CI [-0.0287,+0.0295]  wins 3/5  Wilcoxon p=0.812  paired-t p=0.9926
+learned_policy − class_ratio                         mean diff -0.0565  CI [-0.0801,-0.0330]  wins 0/5  Wilcoxon p=0.062  paired-t p=0.0139
+best in-context − best ensemble (per seed)           mean diff +0.1690  CI [+0.1331,+0.2028]  wins 5/5  Wilcoxon p=0.062  paired-t p=0.0011
+class_ratio − river_arf                              mean diff +0.2285  CI [+0.1962,+0.2642]  wins 5/5  Wilcoxon p=0.062  paired-t p=0.0004
+learned_policy − best ensemble (per seed)            mean diff +0.1124  CI [+0.0667,+0.1582]  wins 5/5  Wilcoxon p=0.062  paired-t p=0.0131
+
+=== for contrast: the OLD unmatched comparison ===
+policy 5-seed mean 0.8692 vs class_ratio SEED-0 ONLY 0.8867  (old gap -0.0175)
+policy 5-seed mean 0.8692 vs class_ratio 5-seed mean 0.9258  (matched gap -0.0565)

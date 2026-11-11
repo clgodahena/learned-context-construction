@@ -1,0 +1,35 @@
+Airlines: 539,383 rows, target='Delay', pos_rate=0.445
+categorical: ['Airline', 'AirportFrom', 'AirportTo', 'DayOfWeek']
+numeric:     ['Flight', 'Time', 'Length']
+
+setting                            model    bal_acc   AUROC   AUPRC
+5700-row prefix (thesis cap) | naive ordinal-as-num   logreg    0.5004   0.558   0.501
+5700-row prefix (thesis cap) | naive ordinal-as-num   rf        0.5804   0.629   0.602
+5700-row prefix (thesis cap) | naive ordinal-as-num   hgb       0.5754   0.616   0.595
+/Users/chinthakalakmalgodahena/Claude/Projects/CS7P01NU-MSc_Project/03_Prototype/.venv/lib/python3.11/site-packages/sklearn/preprocessing/_target_encoder.py:341: FutureWarning: `TargetEncoder.shuffle` and `TargetEncoder.random_state` are deprecated in version 1.9 and will be removed in version 1.11. Pass a cross-validation generator as `cv` argument to specify the shuffling behaviour instead.
+  warnings.warn(
+5700-row prefix (thesis cap) | proper (target-encoded) logreg    0.5613   0.660   0.628
+/Users/chinthakalakmalgodahena/Claude/Projects/CS7P01NU-MSc_Project/03_Prototype/.venv/lib/python3.11/site-packages/sklearn/preprocessing/_target_encoder.py:341: FutureWarning: `TargetEncoder.shuffle` and `TargetEncoder.random_state` are deprecated in version 1.9 and will be removed in version 1.11. Pass a cross-validation generator as `cv` argument to specify the shuffling behaviour instead.
+  warnings.warn(
+5700-row prefix (thesis cap) | proper (target-encoded) rf        0.5905   0.643   0.620
+/Users/chinthakalakmalgodahena/Claude/Projects/CS7P01NU-MSc_Project/03_Prototype/.venv/lib/python3.11/site-packages/sklearn/preprocessing/_target_encoder.py:341: FutureWarning: `TargetEncoder.shuffle` and `TargetEncoder.random_state` are deprecated in version 1.9 and will be removed in version 1.11. Pass a cross-validation generator as `cv` argument to specify the shuffling behaviour instead.
+  warnings.warn(
+5700-row prefix (thesis cap) | proper (target-encoded) hgb       0.5862   0.627   0.601
+      120,000-row sample | naive ordinal-as-num   logreg    0.5613   0.591   0.366
+      120,000-row sample | naive ordinal-as-num   rf        0.6154   0.663   0.452
+      120,000-row sample | naive ordinal-as-num   hgb       0.6016   0.666   0.469
+/Users/chinthakalakmalgodahena/Claude/Projects/CS7P01NU-MSc_Project/03_Prototype/.venv/lib/python3.11/site-packages/sklearn/preprocessing/_target_encoder.py:341: FutureWarning: `TargetEncoder.shuffle` and `TargetEncoder.random_state` are deprecated in version 1.9 and will be removed in version 1.11. Pass a cross-validation generator as `cv` argument to specify the shuffling behaviour instead.
+  warnings.warn(
+      120,000-row sample | proper (target-encoded) logreg    0.5985   0.645   0.448
+/Users/chinthakalakmalgodahena/Claude/Projects/CS7P01NU-MSc_Project/03_Prototype/.venv/lib/python3.11/site-packages/sklearn/preprocessing/_target_encoder.py:341: FutureWarning: `TargetEncoder.shuffle` and `TargetEncoder.random_state` are deprecated in version 1.9 and will be removed in version 1.11. Pass a cross-validation generator as `cv` argument to specify the shuffling behaviour instead.
+  warnings.warn(
+      120,000-row sample | proper (target-encoded) rf        0.6227   0.672   0.468
+/Users/chinthakalakmalgodahena/Claude/Projects/CS7P01NU-MSc_Project/03_Prototype/.venv/lib/python3.11/site-packages/sklearn/preprocessing/_target_encoder.py:341: FutureWarning: `TargetEncoder.shuffle` and `TargetEncoder.random_state` are deprecated in version 1.9 and will be removed in version 1.11. Pass a cross-validation generator as `cv` argument to specify the shuffling behaviour instead.
+  warnings.warn(
+      120,000-row sample | proper (target-encoded) hgb       0.5960   0.655   0.457
+
+Best balanced accuracy over all settings and models: 0.6227
+Reference: the TabPFN stream reports ~0.55-0.58 balanced accuracy on the 5,700 cap.
+Read as a diagnostic: a plateau near 0.60 across three model families and two
+encodings is evidence of little static signal under these representations, not a
+proof of the dataset's signal ceiling.

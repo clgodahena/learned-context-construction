@@ -26,9 +26,12 @@ exploration (the perturbation), variance reduction (the reward baseline), and a
 smoother trajectory (momentum). The rule is confined to :meth:`update` /
 :meth:`select` so it can be swapped without touching the harness.
 
-Exact degeneracy is preserved: with ``sigma=0`` (or weights collapsed onto one
-signal via :meth:`set_onehot`) the selection is deterministic and identical to
-the corresponding single-axis baseline -- see ``tests/test_components.py``.
+Exact degeneracy is preserved for two corners: with ``sigma=0`` (or weights
+collapsed onto one signal via :meth:`set_onehot`) the temporal corner is identical
+to the sliding-window baseline and the feature corner to the similarity baseline
+-- see ``tests/test_components.py``. The class-utility corner is NOT the
+stratified class-ratio baseline (it ranks by a per-class constant and fills the
+context with the rarest class), so that rule is an external baseline.
 """
 from __future__ import annotations
 
@@ -212,7 +215,34 @@ class LearnedPolicySelector:
         self.weight_history.append(self.weights.tolist())
         return take(buffer, idx)
 
-    def update(self, correct: bool, margin: float | None = None, y_true: int | None = None) -> None:
+    # ------------------------------------------------------------------
+    # Delayed feedback support
+    # ------------------------------------------------------------------
+    def capture_update_state(self) -> dict | None:
+        """Snapshot the exploration state of the most recent :meth:`select`.
+
+        Under label delay the harness calls this right after the prediction
+        and hands the token back to :meth:`update` when the label finally
+        arrives, so the policy-gradient step is credited to the perturbation
+        that actually produced that prediction rather than to whatever sample
+        was drawn most recently. Returns ``None`` when the last selection was a
+        pass-through (pool <= k) and carries no exploration sample.
+        """
+        if self._last_eps is None:
+            return None
+        return {"eps": self._last_eps.copy(),
+                "sigma": float(getattr(self, "_last_sigma", self.sigma)),
+                "emphasis": None if self._last_emphasis is None else self._last_emphasis.copy()}
+
+    def _resolve_token(self, token: dict | None):
+        """Return (eps, sigma, emphasis) for this update: the token's if given,
+        otherwise the state left by the most recent :meth:`select`."""
+        if token is None:
+            return self._last_eps, getattr(self, "_last_sigma", self.sigma), self._last_emphasis
+        return token["eps"], token["sigma"], token["emphasis"]
+
+    def update(self, correct: bool, margin: float | None = None, y_true: int | None = None,
+               token: dict | None = None) -> None:
         """Policy-gradient weight update from prediction feedback.
 
         Parameters
@@ -227,8 +257,14 @@ class LearnedPolicySelector:
             that classifying a rare-class instance correctly is worth more --
             aligning the policy's objective with balanced accuracy rather than
             raw accuracy (which imbalance would otherwise dominate).
+        token : dict, optional
+            Exploration state captured by :meth:`capture_update_state` at
+            prediction time; required for correct credit assignment when the
+            label arrives late (label delay). Without it the most recent
+            selection's sample is used (immediate-feedback case).
         """
-        if self.freeze or self._last_eps is None:
+        eps, sigma_t, emph_t = self._resolve_token(token)
+        if self.freeze or eps is None:
             return
 
         if self.reward_mode == "windowed" and y_true is not None:
@@ -265,15 +301,14 @@ class LearnedPolicySelector:
             )
         advantage = reward - self._baseline
 
-        sigma_t = getattr(self, "_last_sigma", self.sigma)
         if self.update_rule == "emphasis" or sigma_t <= 0:
             # Heuristic: move toward signals emphasised on correct steps.
-            emph = self._last_emphasis if self._last_emphasis is not None else np.zeros(3)
+            emph = emph_t if emph_t is not None else np.zeros(3)
             grad = advantage * emph
         else:
             # Gaussian REINFORCE. Normalise by sigma (not sigma^2) so the update
             # magnitude stays ~O(lr * advantage) as exploration is annealed.
-            grad = advantage * self._last_eps / sigma_t
+            grad = advantage * eps / sigma_t
 
         # Entropy regularisation: pull logits toward uniform so the policy keeps
         # arbitrating across axes rather than collapsing onto a single one.

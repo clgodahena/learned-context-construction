@@ -132,6 +132,24 @@ def build_selector(cfg: dict, n_classes: int = 2) -> Any:
             freeze=cfg.get("freeze", False),
             seed=cfg.get("seed", 0),
         )
+    if name.startswith("anchored_policy"):   # anchored_policy (class_utility) / anchored_policy_t (temporal)
+        from .selection.anchored_policy import AnchoredPolicySelector
+        return AnchoredPolicySelector(
+            n_classes=n_classes,
+            positive_class=cfg.get("positive_class", 1),
+            candidate_pool=cfg.get("candidate_pool", 4000),
+            lr=cfg.get("lr", 0.05),
+            sigma=cfg.get("sigma", 0.25),
+            update_rule=cfg.get("update_rule", "policy_gradient"),
+            balanced_reward=cfg.get("balanced_reward", True),
+            reward_mode=cfg.get("reward_mode", "instance"),
+            tau=cfg.get("tau"),
+            cost=cfg.get("cost"),
+            seed=cfg.get("seed", 0),
+            anchor=cfg.get("anchor", "class_utility"),
+            anchor_reg=cfg.get("anchor_reg", 0.1),
+            anchor_sharpness=cfg.get("anchor_sharpness", 2.5),
+        )
     raise ValueError(f"unknown selector: {name}")
 
 

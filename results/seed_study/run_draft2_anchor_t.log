@@ -1,0 +1,83 @@
+[seed_study] blocks=['B_anchor_t']  planned=10  done=0  remaining=10
+    [TODO] B_anchor_t__tabpfn__electricity__anchored_policy_t__seed0
+    [TODO] B_anchor_t__tabpfn__electricity__anchored_policy_t__seed1
+    [TODO] B_anchor_t__tabpfn__electricity__anchored_policy_t__seed2
+    [TODO] B_anchor_t__tabpfn__electricity__anchored_policy_t__seed3
+    [TODO] B_anchor_t__tabpfn__electricity__anchored_policy_t__seed4
+    [TODO] B_anchor_t__tabpfn__synth_rotate__anchored_policy_t__seed0
+    [TODO] B_anchor_t__tabpfn__synth_rotate__anchored_policy_t__seed1
+    [TODO] B_anchor_t__tabpfn__synth_rotate__anchored_policy_t__seed2
+    [TODO] B_anchor_t__tabpfn__synth_rotate__anchored_policy_t__seed3
+    [TODO] B_anchor_t__tabpfn__synth_rotate__anchored_policy_t__seed4
+
+[1/10] B_anchor_t__tabpfn__electricity__anchored_policy_t__seed0  running...
+[prequential] 1000 scored (1.6/s, 626s, bal_acc=0.966, ~49.0 min left)
+[prequential] 2000 scored (1.7/s, 1149s, bal_acc=0.960, ~35.4 min left)
+[prequential] 3000 scored (1.8/s, 1670s, bal_acc=0.958, ~25.1 min left)
+[prequential] 4000 scored (1.8/s, 2176s, bal_acc=0.962, ~15.4 min left)
+[prequential] 5000 scored (1.9/s, 2669s, bal_acc=0.958, ~6.2 min left)
+    -> bal_acc=0.9577  kappa_t=0.748  n=5700  50.3 min
+
+[2/10] B_anchor_t__tabpfn__electricity__anchored_policy_t__seed1  running...
+[prequential] 1000 scored (2.0/s, 496s, bal_acc=0.966, ~38.8 min left)
+[prequential] 2000 scored (2.0/s, 992s, bal_acc=0.960, ~30.6 min left)
+[prequential] 3000 scored (2.0/s, 1488s, bal_acc=0.959, ~22.3 min left)
+[prequential] 4000 scored (2.0/s, 1983s, bal_acc=0.962, ~14.1 min left)
+[prequential] 5000 scored (2.0/s, 2479s, bal_acc=0.959, ~5.8 min left)
+    -> bal_acc=0.9584  kappa_t=0.752  n=5700  47.1 min
+
+[3/10] B_anchor_t__tabpfn__electricity__anchored_policy_t__seed2  running...
+[prequential] 1000 scored (2.0/s, 493s, bal_acc=0.966, ~38.6 min left)
+[prequential] 2000 scored (2.0/s, 986s, bal_acc=0.960, ~30.4 min left)
+[prequential] 3000 scored (2.0/s, 1480s, bal_acc=0.958, ~22.2 min left)
+[prequential] 4000 scored (2.0/s, 1974s, bal_acc=0.961, ~14.0 min left)
+[prequential] 5000 scored (2.0/s, 2467s, bal_acc=0.958, ~5.8 min left)
+    -> bal_acc=0.9578  kappa_t=0.748  n=5700  46.9 min
+
+[4/10] B_anchor_t__tabpfn__electricity__anchored_policy_t__seed3  running...
+[prequential] 1000 scored (2.0/s, 493s, bal_acc=0.966, ~38.6 min left)
+[prequential] 2000 scored (2.0/s, 987s, bal_acc=0.960, ~30.4 min left)
+[prequential] 3000 scored (2.0/s, 1481s, bal_acc=0.959, ~22.2 min left)
+[prequential] 4000 scored (2.0/s, 1976s, bal_acc=0.962, ~14.0 min left)
+[prequential] 5000 scored (2.0/s, 2473s, bal_acc=0.958, ~5.8 min left)
+    -> bal_acc=0.9580  kappa_t=0.749  n=5700  47.0 min
+
+[5/10] B_anchor_t__tabpfn__electricity__anchored_policy_t__seed4  running...
+[prequential] 1000 scored (2.0/s, 494s, bal_acc=0.966, ~38.7 min left)
+[prequential] 2000 scored (2.0/s, 988s, bal_acc=0.960, ~30.5 min left)
+[prequential] 3000 scored (2.0/s, 1482s, bal_acc=0.959, ~22.2 min left)
+[prequential] 4000 scored (2.0/s, 1976s, bal_acc=0.962, ~14.0 min left)
+[prequential] 5000 scored (2.0/s, 2470s, bal_acc=0.959, ~5.8 min left)
+    -> bal_acc=0.9582  kappa_t=0.751  n=5700  46.9 min
+
+[6/10] B_anchor_t__tabpfn__synth_rotate__anchored_policy_t__seed0  running...
+[prequential] 1000 scored (2.0/s, 490s, bal_acc=0.827, ~18.2 min left)
+[prequential] 2000 scored (2.0/s, 979s, bal_acc=0.840, ~10.0 min left)
+[prequential] 3000 scored (2.0/s, 1471s, bal_acc=0.851, ~1.9 min left)
+    -> bal_acc=0.8527  kappa_t=0.755  n=3226  26.4 min
+
+[7/10] B_anchor_t__tabpfn__synth_rotate__anchored_policy_t__seed1  running...
+[prequential] 1000 scored (2.0/s, 494s, bal_acc=0.917, ~18.4 min left)
+[prequential] 2000 scored (2.0/s, 990s, bal_acc=0.906, ~10.2 min left)
+[prequential] 3000 scored (2.0/s, 1492s, bal_acc=0.906, ~1.9 min left)
+    -> bal_acc=0.9052  kappa_t=0.846  n=3229  26.7 min
+
+[8/10] B_anchor_t__tabpfn__synth_rotate__anchored_policy_t__seed2  running...
+[prequential] 1000 scored (2.0/s, 491s, bal_acc=0.937, ~18.2 min left)
+[prequential] 2000 scored (2.0/s, 985s, bal_acc=0.918, ~10.1 min left)
+[prequential] 3000 scored (2.0/s, 1493s, bal_acc=0.918, ~1.9 min left)
+    -> bal_acc=0.9216  kappa_t=0.853  n=3225  26.8 min
+
+[9/10] B_anchor_t__tabpfn__synth_rotate__anchored_policy_t__seed3  running...
+[prequential] 1000 scored (2.0/s, 506s, bal_acc=0.953, ~18.8 min left)
+[prequential] 2000 scored (2.0/s, 1008s, bal_acc=0.901, ~10.3 min left)
+[prequential] 3000 scored (2.0/s, 1510s, bal_acc=0.903, ~1.9 min left)
+    -> bal_acc=0.9046  kappa_t=0.830  n=3228  27.1 min
+
+[10/10] B_anchor_t__tabpfn__synth_rotate__anchored_policy_t__seed4  running...
+[prequential] 1000 scored (2.0/s, 507s, bal_acc=0.908, ~18.9 min left)
+[prequential] 2000 scored (2.0/s, 1003s, bal_acc=0.914, ~10.4 min left)
+[prequential] 3000 scored (2.0/s, 1504s, bal_acc=0.911, ~2.0 min left)
+    -> bal_acc=0.9129  kappa_t=0.833  n=3238  27.0 min
+
+[seed_study] finished this pass in 372.3 min. Re-run the same command any time to resume/extend. Then: python -m scripts.analysis.stats_report

@@ -9,11 +9,13 @@ vector of scores (higher = more desirable to include):
 * :func:`feature_relevance`   -- how close it is to the query in feature space.
 * :func:`class_utility`       -- its marginal value given class imbalance/cost.
 
-Keeping the signals separate and reusable is deliberate: the single-axis
-baselines are each "select top-k by one signal", and the learned policy is
-"select top-k by a learned weighting of all three". Because they share these
-exact functions, the claim that the baselines are degenerate parameterisations
-of the policy is true by construction, not by approximation.
+Keeping the signals separate and reusable is deliberate: the recency and
+similarity baselines are each "select top-k by one signal", and the learned
+policy is "select top-k by a learned weighting of all three". Because they
+share these exact functions, the claim that those two baselines are degenerate
+parameterisations of the policy is true by construction. The class-ratio
+baseline is a stratified draw and is NOT a parameterisation of the policy
+(the class-utility corner yields the k rarest-class instances instead).
 """
 from __future__ import annotations
 

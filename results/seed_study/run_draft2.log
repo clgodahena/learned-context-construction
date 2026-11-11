@@ -1,0 +1,251 @@
+[seed_study] blocks=['B_synth5', 'B_anchor']  planned=34  done=0  remaining=34
+    [TODO] B_synth5__tabpfn__synth_rotate__sliding_window__seed1
+    [TODO] B_synth5__tabpfn__synth_rotate__similarity__seed1
+    [TODO] B_synth5__tabpfn__synth_rotate__class_ratio__seed1
+    [TODO] B_synth5__tabpfn__synth_rotate__online_bagging__seed1
+    [TODO] B_synth5__tabpfn__synth_rotate__river_arf__seed1
+    [TODO] B_synth5__tabpfn__synth_rotate__river_srp__seed1
+    [TODO] B_synth5__tabpfn__synth_rotate__sliding_window__seed2
+    [TODO] B_synth5__tabpfn__synth_rotate__similarity__seed2
+    [TODO] B_synth5__tabpfn__synth_rotate__class_ratio__seed2
+    [TODO] B_synth5__tabpfn__synth_rotate__online_bagging__seed2
+    [TODO] B_synth5__tabpfn__synth_rotate__river_arf__seed2
+    [TODO] B_synth5__tabpfn__synth_rotate__river_srp__seed2
+    [TODO] B_synth5__tabpfn__synth_rotate__sliding_window__seed3
+    [TODO] B_synth5__tabpfn__synth_rotate__similarity__seed3
+    [TODO] B_synth5__tabpfn__synth_rotate__class_ratio__seed3
+    [TODO] B_synth5__tabpfn__synth_rotate__online_bagging__seed3
+    [TODO] B_synth5__tabpfn__synth_rotate__river_arf__seed3
+    [TODO] B_synth5__tabpfn__synth_rotate__river_srp__seed3
+    [TODO] B_synth5__tabpfn__synth_rotate__sliding_window__seed4
+    [TODO] B_synth5__tabpfn__synth_rotate__similarity__seed4
+    [TODO] B_synth5__tabpfn__synth_rotate__class_ratio__seed4
+    [TODO] B_synth5__tabpfn__synth_rotate__online_bagging__seed4
+    [TODO] B_synth5__tabpfn__synth_rotate__river_arf__seed4
+    [TODO] B_synth5__tabpfn__synth_rotate__river_srp__seed4
+    [TODO] B_anchor__tabpfn__electricity__anchored_policy__seed0
+    [TODO] B_anchor__tabpfn__electricity__anchored_policy__seed1
+    [TODO] B_anchor__tabpfn__electricity__anchored_policy__seed2
+    [TODO] B_anchor__tabpfn__electricity__anchored_policy__seed3
+    [TODO] B_anchor__tabpfn__electricity__anchored_policy__seed4
+    [TODO] B_anchor__tabpfn__synth_rotate__anchored_policy__seed0
+    [TODO] B_anchor__tabpfn__synth_rotate__anchored_policy__seed1
+    [TODO] B_anchor__tabpfn__synth_rotate__anchored_policy__seed2
+    [TODO] B_anchor__tabpfn__synth_rotate__anchored_policy__seed3
+    [TODO] B_anchor__tabpfn__synth_rotate__anchored_policy__seed4
+
+[1/34] B_synth5__tabpfn__synth_rotate__sliding_window__seed1  running...
+[prequential] 1000 scored (2.0/s, 494s, bal_acc=0.918, ~18.4 min left)
+[prequential] 2000 scored (2.0/s, 990s, bal_acc=0.904, ~10.1 min left)
+[prequential] 3000 scored (2.0/s, 1487s, bal_acc=0.906, ~1.9 min left)
+    -> bal_acc=0.9044  kappa_t=0.846  n=3229  26.7 min
+
+[2/34] B_synth5__tabpfn__synth_rotate__similarity__seed1  running...
+[prequential] 1000 scored (2.0/s, 506s, bal_acc=0.928, ~18.8 min left)
+[prequential] 2000 scored (2.0/s, 999s, bal_acc=0.917, ~10.2 min left)
+[prequential] 3000 scored (2.0/s, 1502s, bal_acc=0.868, ~1.9 min left)
+    -> bal_acc=0.8622  kappa_t=0.750  n=3229  26.9 min
+
+[3/34] B_synth5__tabpfn__synth_rotate__class_ratio__seed1  running...
+[prequential] 1000 scored (2.0/s, 498s, bal_acc=0.937, ~18.5 min left)
+[prequential] 2000 scored (2.0/s, 996s, bal_acc=0.930, ~10.2 min left)
+[prequential] 3000 scored (2.0/s, 1489s, bal_acc=0.931, ~1.9 min left)
+    -> bal_acc=0.9305  kappa_t=0.801  n=3229  26.7 min
+
+[4/34] B_synth5__tabpfn__synth_rotate__online_bagging__seed1  running...
+[prequential] 1000 scored (314.5/s, 3s, ~0.1 min left)
+[prequential] 2000 scored (350.1/s, 6s, ~0.1 min left)
+[prequential] 3000 scored (363.5/s, 8s, ~0.0 min left)
+    -> bal_acc=0.7446  kappa_t=0.517  n=3229  0.1 min
+
+[5/34] B_synth5__tabpfn__synth_rotate__river_arf__seed1  running...
+[prequential] 1000 scored (2834.5/s, 0s, ~0.0 min left)
+[prequential] 2000 scored (3090.7/s, 1s, ~0.0 min left)
+[prequential] 3000 scored (3175.2/s, 1s, ~0.0 min left)
+    -> bal_acc=0.6963  kappa_t=0.604  n=3229  0.0 min
+
+[6/34] B_synth5__tabpfn__synth_rotate__river_srp__seed1  running...
+[prequential] 1000 scored (1228.1/s, 1s, ~0.0 min left)
+[prequential] 2000 scored (1342.9/s, 1s, ~0.0 min left)
+[prequential] 3000 scored (1393.4/s, 2s, ~0.0 min left)
+    -> bal_acc=0.6409  kappa_t=0.544  n=3229  0.0 min
+
+[7/34] B_synth5__tabpfn__synth_rotate__sliding_window__seed2  running...
+[prequential] 1000 scored (2.0/s, 493s, bal_acc=0.937, ~18.3 min left)
+[prequential] 2000 scored (2.0/s, 989s, bal_acc=0.917, ~10.1 min left)
+[prequential] 3000 scored (2.0/s, 1482s, bal_acc=0.918, ~1.9 min left)
+    -> bal_acc=0.9221  kappa_t=0.857  n=3225  26.5 min
+
+[8/34] B_synth5__tabpfn__synth_rotate__similarity__seed2  running...
+[prequential] 1000 scored (2.0/s, 491s, bal_acc=0.962, ~18.2 min left)
+[prequential] 2000 scored (2.0/s, 982s, bal_acc=0.928, ~10.0 min left)
+[prequential] 3000 scored (2.0/s, 1473s, bal_acc=0.918, ~1.8 min left)
+    -> bal_acc=0.9223  kappa_t=0.813  n=3225  26.4 min
+
+[9/34] B_synth5__tabpfn__synth_rotate__class_ratio__seed2  running...
+[prequential] 1000 scored (2.0/s, 491s, bal_acc=0.969, ~18.2 min left)
+[prequential] 2000 scored (2.0/s, 982s, bal_acc=0.948, ~10.0 min left)
+[prequential] 3000 scored (2.0/s, 1473s, bal_acc=0.952, ~1.8 min left)
+    -> bal_acc=0.9546  kappa_t=0.842  n=3225  26.4 min
+
+[10/34] B_synth5__tabpfn__synth_rotate__online_bagging__seed2  running...
+[prequential] 1000 scored (313.5/s, 3s, ~0.1 min left)
+[prequential] 2000 scored (348.8/s, 6s, ~0.1 min left)
+[prequential] 3000 scored (362.8/s, 8s, ~0.0 min left)
+    -> bal_acc=0.7387  kappa_t=0.516  n=3225  0.1 min
+
+[11/34] B_synth5__tabpfn__synth_rotate__river_arf__seed2  running...
+[prequential] 1000 scored (2943.6/s, 0s, ~0.0 min left)
+[prequential] 2000 scored (3069.2/s, 1s, ~0.0 min left)
+[prequential] 3000 scored (3186.0/s, 1s, ~0.0 min left)
+    -> bal_acc=0.6607  kappa_t=0.549  n=3225  0.0 min
+
+[12/34] B_synth5__tabpfn__synth_rotate__river_srp__seed2  running...
+[prequential] 1000 scored (1233.5/s, 1s, ~0.0 min left)
+[prequential] 2000 scored (1353.3/s, 1s, ~0.0 min left)
+[prequential] 3000 scored (1381.5/s, 2s, ~0.0 min left)
+    -> bal_acc=0.5589  kappa_t=0.445  n=3225  0.0 min
+
+[13/34] B_synth5__tabpfn__synth_rotate__sliding_window__seed3  running...
+[prequential] 1000 scored (2.0/s, 490s, bal_acc=0.952, ~18.2 min left)
+[prequential] 2000 scored (2.0/s, 980s, bal_acc=0.902, ~10.0 min left)
+[prequential] 3000 scored (2.0/s, 1476s, bal_acc=0.903, ~1.9 min left)
+    -> bal_acc=0.9033  kappa_t=0.833  n=3228  26.5 min
+
+[14/34] B_synth5__tabpfn__synth_rotate__similarity__seed3  running...
+[prequential] 1000 scored (2.1/s, 487s, bal_acc=0.956, ~18.1 min left)
+[prequential] 2000 scored (2.0/s, 976s, bal_acc=0.891, ~10.0 min left)
+[prequential] 3000 scored (2.0/s, 1467s, bal_acc=0.867, ~1.9 min left)
+    -> bal_acc=0.8629  kappa_t=0.732  n=3228  26.3 min
+
+[15/34] B_synth5__tabpfn__synth_rotate__class_ratio__seed3  running...
+[prequential] 1000 scored (2.0/s, 503s, bal_acc=0.954, ~18.7 min left)
+[prequential] 2000 scored (2.0/s, 1006s, bal_acc=0.907, ~10.3 min left)
+[prequential] 3000 scored (2.0/s, 1512s, bal_acc=0.910, ~1.9 min left)
+    -> bal_acc=0.9128  kappa_t=0.760  n=3228  27.1 min
+
+[16/34] B_synth5__tabpfn__synth_rotate__online_bagging__seed3  running...
+[prequential] 1000 scored (308.6/s, 3s, ~0.1 min left)
+[prequential] 2000 scored (343.7/s, 6s, ~0.1 min left)
+[prequential] 3000 scored (357.3/s, 8s, ~0.0 min left)
+    -> bal_acc=0.7791  kappa_t=0.589  n=3228  0.1 min
+
+[17/34] B_synth5__tabpfn__synth_rotate__river_arf__seed3  running...
+[prequential] 1000 scored (2590.8/s, 0s, ~0.0 min left)
+[prequential] 2000 scored (2819.9/s, 1s, ~0.0 min left)
+[prequential] 3000 scored (2879.6/s, 1s, ~0.0 min left)
+    -> bal_acc=0.6720  kappa_t=0.574  n=3228  0.0 min
+
+[18/34] B_synth5__tabpfn__synth_rotate__river_srp__seed3  running...
+[prequential] 1000 scored (1191.9/s, 1s, ~0.0 min left)
+[prequential] 2000 scored (1303.4/s, 2s, ~0.0 min left)
+[prequential] 3000 scored (1351.9/s, 2s, ~0.0 min left)
+    -> bal_acc=0.6483  kappa_t=0.528  n=3228  0.0 min
+
+[19/34] B_synth5__tabpfn__synth_rotate__sliding_window__seed4  running...
+[prequential] 1000 scored (2.0/s, 495s, bal_acc=0.912, ~18.5 min left)
+[prequential] 2000 scored (2.0/s, 994s, bal_acc=0.914, ~10.3 min left)
+[prequential] 3000 scored (2.0/s, 1494s, bal_acc=0.911, ~2.0 min left)
+    -> bal_acc=0.9124  kappa_t=0.830  n=3238  26.9 min
+
+[20/34] B_synth5__tabpfn__synth_rotate__similarity__seed4  running...
+[prequential] 1000 scored (2.0/s, 504s, bal_acc=0.916, ~18.8 min left)
+[prequential] 2000 scored (2.0/s, 1006s, bal_acc=0.912, ~10.4 min left)
+[prequential] 3000 scored (2.0/s, 1511s, bal_acc=0.863, ~2.0 min left)
+    -> bal_acc=0.8628  kappa_t=0.740  n=3238  27.2 min
+
+[21/34] B_synth5__tabpfn__synth_rotate__class_ratio__seed4  running...
+[prequential] 1000 scored (2.0/s, 507s, bal_acc=0.951, ~18.9 min left)
+[prequential] 2000 scored (2.0/s, 1007s, bal_acc=0.944, ~10.4 min left)
+[prequential] 3000 scored (2.0/s, 1510s, bal_acc=0.943, ~2.0 min left)
+    -> bal_acc=0.9442  kappa_t=0.799  n=3238  27.2 min
+
+[22/34] B_synth5__tabpfn__synth_rotate__online_bagging__seed4  running...
+[prequential] 1000 scored (313.6/s, 3s, ~0.1 min left)
+[prequential] 2000 scored (347.7/s, 6s, ~0.1 min left)
+[prequential] 3000 scored (361.4/s, 8s, ~0.0 min left)
+    -> bal_acc=0.8329  kappa_t=0.691  n=3238  0.1 min
+
+[23/34] B_synth5__tabpfn__synth_rotate__river_arf__seed4  running...
+[prequential] 1000 scored (3083.7/s, 0s, ~0.0 min left)
+[prequential] 2000 scored (3274.4/s, 1s, ~0.0 min left)
+[prequential] 3000 scored (3330.0/s, 1s, ~0.0 min left)
+    -> bal_acc=0.7690  kappa_t=0.670  n=3238  0.0 min
+
+[24/34] B_synth5__tabpfn__synth_rotate__river_srp__seed4  running...
+[prequential] 1000 scored (1229.1/s, 1s, ~0.0 min left)
+[prequential] 2000 scored (1363.4/s, 1s, ~0.0 min left)
+[prequential] 3000 scored (1377.9/s, 2s, ~0.0 min left)
+    -> bal_acc=0.7304  kappa_t=0.638  n=3238  0.0 min
+
+[25/34] B_anchor__tabpfn__electricity__anchored_policy__seed0  running...
+[prequential] 1000 scored (7.4/s, 136s, bal_acc=0.602, ~10.6 min left)
+[prequential] 2000 scored (14.7/s, 136s, bal_acc=0.547, ~4.2 min left)
+[prequential] 3000 scored (21.9/s, 137s, bal_acc=0.532, ~2.1 min left)
+[prequential] 4000 scored (29.1/s, 138s, bal_acc=0.523, ~1.0 min left)
+[prequential] 5000 scored (36.1/s, 138s, bal_acc=0.518, ~0.3 min left)
+    -> bal_acc=0.5162  kappa_t=-2.684  n=5700  2.3 min
+
+[26/34] B_anchor__tabpfn__electricity__anchored_policy__seed1  running...
+[prequential] 1000 scored (7.5/s, 134s, bal_acc=0.603, ~10.5 min left)
+[prequential] 2000 scored (14.9/s, 135s, bal_acc=0.547, ~4.2 min left)
+[prequential] 3000 scored (22.2/s, 135s, bal_acc=0.532, ~2.0 min left)
+[prequential] 4000 scored (29.4/s, 136s, bal_acc=0.523, ~1.0 min left)
+[prequential] 5000 scored (36.5/s, 137s, bal_acc=0.519, ~0.3 min left)
+    -> bal_acc=0.5164  kappa_t=-2.683  n=5700  2.3 min
+
+[27/34] B_anchor__tabpfn__electricity__anchored_policy__seed2  running...
+[prequential] 1000 scored (7.5/s, 134s, bal_acc=0.601, ~10.5 min left)
+[prequential] 2000 scored (14.9/s, 134s, bal_acc=0.546, ~4.1 min left)
+[prequential] 3000 scored (22.2/s, 135s, bal_acc=0.531, ~2.0 min left)
+[prequential] 4000 scored (29.5/s, 136s, bal_acc=0.523, ~1.0 min left)
+[prequential] 5000 scored (36.6/s, 136s, bal_acc=0.518, ~0.3 min left)
+    -> bal_acc=0.5160  kappa_t=-2.685  n=5700  2.3 min
+
+[28/34] B_anchor__tabpfn__electricity__anchored_policy__seed3  running...
+[prequential] 1000 scored (7.4/s, 135s, bal_acc=0.602, ~10.5 min left)
+[prequential] 2000 scored (14.8/s, 135s, bal_acc=0.547, ~4.2 min left)
+[prequential] 3000 scored (22.1/s, 136s, bal_acc=0.532, ~2.0 min left)
+[prequential] 4000 scored (29.3/s, 137s, bal_acc=0.523, ~1.0 min left)
+[prequential] 5000 scored (36.4/s, 137s, bal_acc=0.518, ~0.3 min left)
+    -> bal_acc=0.5162  kappa_t=-2.684  n=5700  2.3 min
+
+[29/34] B_anchor__tabpfn__electricity__anchored_policy__seed4  running...
+[prequential] 1000 scored (7.4/s, 134s, bal_acc=0.602, ~10.5 min left)
+[prequential] 2000 scored (14.8/s, 135s, bal_acc=0.547, ~4.2 min left)
+[prequential] 3000 scored (22.1/s, 136s, bal_acc=0.532, ~2.0 min left)
+[prequential] 4000 scored (29.3/s, 136s, bal_acc=0.523, ~1.0 min left)
+[prequential] 5000 scored (36.5/s, 137s, bal_acc=0.518, ~0.3 min left)
+    -> bal_acc=0.5162  kappa_t=-2.684  n=5700  2.3 min
+
+[30/34] B_anchor__tabpfn__synth_rotate__anchored_policy__seed0  running...
+[prequential] 1000 scored (2.0/s, 504s, bal_acc=0.860, ~18.7 min left)
+[prequential] 2000 scored (2.6/s, 759s, bal_acc=0.768, ~7.8 min left)
+[prequential] 3000 scored (3.9/s, 760s, bal_acc=0.684, ~1.0 min left)
+    -> bal_acc=0.6723  kappa_t=-0.942  n=3226  12.7 min
+
+[31/34] B_anchor__tabpfn__synth_rotate__anchored_policy__seed1  running...
+[prequential] 1000 scored (2.0/s, 496s, bal_acc=0.927, ~18.4 min left)
+[prequential] 2000 scored (2.7/s, 728s, bal_acc=0.807, ~7.5 min left)
+[prequential] 3000 scored (4.1/s, 728s, bal_acc=0.708, ~0.9 min left)
+    -> bal_acc=0.6930  kappa_t=-0.896  n=3229  12.1 min
+
+[32/34] B_anchor__tabpfn__synth_rotate__anchored_policy__seed2  running...
+[prequential] 1000 scored (2.0/s, 498s, bal_acc=0.961, ~18.5 min left)
+[prequential] 2000 scored (2.8/s, 723s, bal_acc=0.839, ~7.4 min left)
+[prequential] 3000 scored (4.1/s, 724s, bal_acc=0.727, ~0.9 min left)
+    -> bal_acc=0.7115  kappa_t=-0.877  n=3225  12.1 min
+
+[33/34] B_anchor__tabpfn__synth_rotate__anchored_policy__seed3  running...
+[prequential] 1000 scored (2.0/s, 499s, bal_acc=0.950, ~18.5 min left)
+[prequential] 2000 scored (2.9/s, 684s, bal_acc=0.785, ~7.0 min left)
+[prequential] 3000 scored (4.4/s, 685s, bal_acc=0.685, ~0.9 min left)
+    -> bal_acc=0.6723  kappa_t=-1.058  n=3228  11.4 min
+
+[34/34] B_anchor__tabpfn__synth_rotate__anchored_policy__seed4  running...
+[prequential] 1000 scored (1.9/s, 522s, bal_acc=0.909, ~19.5 min left)
+[prequential] 2000 scored (2.7/s, 746s, bal_acc=0.800, ~7.7 min left)
+[prequential] 3000 scored (4.0/s, 747s, bal_acc=0.703, ~1.0 min left)
+    -> bal_acc=0.6882  kappa_t=-0.945  n=3238  12.5 min
+
+[seed_study] finished this pass in 393.8 min. Re-run the same command any time to resume/extend. Then: python -m scripts.analysis.stats_report

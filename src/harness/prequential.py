@@ -9,7 +9,19 @@ This is the streaming harness. For each arriving instance it:
 
 Label delay models the reality that ground truth arrives later than the
 prediction is needed; with ``label_delay=0`` the label is available immediately
-after prediction. The loop also records the *context composition* per step
+after prediction. With ``label_delay=d`` an instance enters the buffer only
+``d`` steps after it was predicted, AND the online selector's feedback update
+for that prediction is deferred until the same moment (the update is credited
+to the exploration sample that produced the prediction, see
+``LearnedPolicySelector.capture_update_state``). Delay therefore affects every
+selector's context (the buffer ages) and, additionally, the learned policy's
+adaptation. Before 2026-11-10 the update was applied immediately regardless of
+delay; that behaviour was inconsistent with the stated semantics and is gone.
+
+When ``time_it`` is set the loop records, per scored instance and with one
+timing procedure (``time.perf_counter`` around each stage), the wall time of
+context selection, frozen-model inference and the selector update, plus their
+end-to-end sum; the summary reports mean / p50 / p95 / p99 / max for each. The loop also records the *context composition* per step
 (class balance, temporal span) which the dashboard visualises -- the diagnostic
 that reveals *why* a strategy wins, not merely that it does.
 """
@@ -32,8 +44,12 @@ class RunResult:
     summary: dict
     trajectory: list
     composition: list = field(default_factory=list)
-    latencies_ms: list = field(default_factory=list)
+    latencies_ms: list = field(default_factory=list)   # select + infer (legacy)
     predictions: list = field(default_factory=list)  # (t, y_true, y_pred) when recorded
+    select_ms: list = field(default_factory=list)
+    infer_ms: list = field(default_factory=list)
+    update_ms: list = field(default_factory=list)
+    step_ms: list = field(default_factory=list)      # end-to-end per scored instance
 
 
 def run_prequential(
@@ -73,8 +89,11 @@ def run_prequential(
     metrics = PrequentialMetrics(
         n_classes=stream.n_classes, positive_class=positive_class, window=metric_window
     )
-    pending: list[tuple[int, Instance, Optional[bool]]] = []  # delayed labels
+    # delayed labels: (t, instance, correct, margin, update_token)
+    pending: list[tuple] = []
     result = RunResult(summary={}, trajectory=[])
+    update = getattr(selector, "update", None)
+    capture = getattr(selector, "capture_update_state", None)
 
     rng = np.random.default_rng(0)
 
@@ -83,19 +102,33 @@ def run_prequential(
             break
 
         # --- release any labels whose delay has elapsed ---
+        # The released instance joins the buffer AND its (deferred) feedback
+        # update is applied now, credited to the exploration sample that was
+        # used when it was predicted.
         if label_delay > 0 and pending:
             ready = [p for p in pending if inst.t - p[0] >= label_delay]
-            for _, past_inst, fb in ready:
+            for _, past_inst, fb, margin_p, token in ready:
                 buffer.add(past_inst, feedback=fb)
+                if fb is not None and callable(update):
+                    tu = time.perf_counter() if time_it else 0.0
+                    update(bool(fb), margin=margin_p, y_true=int(past_inst.y), token=token)
+                    if time_it:
+                        result.update_ms.append((time.perf_counter() - tu) * 1000.0)
             pending = [p for p in pending if inst.t - p[0] < label_delay]
 
         # --- test ---
+        margin = None
+        token = None
         if len(buffer) >= warmup:
             t0 = time.perf_counter() if time_it else 0.0
             ctx = selector.select(buffer, inst.x, k)
+            t1 = time.perf_counter() if time_it else 0.0
             proba = classifier.predict_proba(ctx.X, ctx.y, inst.x)[0]
+            t2 = time.perf_counter() if time_it else 0.0
             if time_it:
-                result.latencies_ms.append((time.perf_counter() - t0) * 1000.0)
+                result.select_ms.append((t1 - t0) * 1000.0)
+                result.infer_ms.append((t2 - t1) * 1000.0)
+                result.latencies_ms.append((t2 - t0) * 1000.0)
 
             y_pred = int(np.argmax(proba))
             score_pos = float(proba[positive_class]) if proba.shape[0] > positive_class else 0.0
@@ -104,14 +137,27 @@ def run_prequential(
             if record_predictions:
                 result.predictions.append((int(inst.t), int(inst.y), y_pred))
 
-            # Feed prediction outcome back to online selectors (e.g. the learned
-            # policy). Prequential evaluation reveals the label at test time, so
-            # the update is available immediately regardless of buffer delay.
-            update = getattr(selector, "update", None)
+            # Feed the prediction outcome back to online selectors (the learned
+            # policy). With no label delay the label is revealed now and the
+            # update is applied now; with a delay the update is deferred until
+            # the label is released (see the block at the top of the loop), and
+            # the selector's exploration state for THIS prediction is captured so
+            # the deferred update credits the right sample.
             if callable(update):
                 others = np.delete(proba, inst.y) if proba.shape[0] > 1 else np.array([0.0])
                 margin = float(proba[inst.y] - (others.max() if others.size else 0.0))
-                update(bool(correct), margin=margin, y_true=int(inst.y))
+                if label_delay > 0:
+                    token = capture() if callable(capture) else None
+                    t3 = t2
+                else:
+                    update(bool(correct), margin=margin, y_true=int(inst.y))
+                    t3 = time.perf_counter() if time_it else 0.0
+                    if time_it:
+                        result.update_ms.append((t3 - t2) * 1000.0)
+            else:
+                t3 = t2
+            if time_it:
+                result.step_ms.append((t3 - t0) * 1000.0)
 
             if track_composition and len(ctx) > 0:
                 cy = ctx.y
@@ -145,18 +191,41 @@ def run_prequential(
 
         # --- train (add to buffer, respecting label delay) ---
         if label_delay > 0:
-            pending.append((inst.t, inst, correct))
+            pending.append((inst.t, inst, correct, margin, token))
         else:
             buffer.add(inst, feedback=correct)
 
     metrics.snapshot(getattr(inst, "t", 0))
     result.summary = metrics.summary()
     result.trajectory = metrics.trajectory
+    result.summary["label_delay"] = int(label_delay)
     if result.latencies_ms:
         arr = np.asarray(result.latencies_ms)
         result.summary["latency_ms_p50"] = float(np.percentile(arr, 50))
         result.summary["latency_ms_p95"] = float(np.percentile(arr, 95))
+    _timing_summary(result)
     return result
+
+
+def _timing_summary(result: "RunResult") -> None:
+    """Add mean / p50 / p95 / p99 / max (ms) per stage to ``result.summary``.
+
+    All stages are timed with the same procedure inside the same run, so the
+    numbers are directly comparable: ``select`` is context selection,
+    ``infer`` the frozen model's forward pass, ``update`` the selector's
+    feedback update (empty for fixed selectors), ``step`` the end-to-end sum
+    per scored instance.
+    """
+    for name, arr in (("select", result.select_ms), ("infer", result.infer_ms),
+                      ("update", result.update_ms), ("step", result.step_ms)):
+        if not arr:
+            continue
+        a = np.asarray(arr, dtype=np.float64)
+        result.summary[f"t_{name}_ms_mean"] = float(a.mean())
+        result.summary[f"t_{name}_ms_p50"] = float(np.percentile(a, 50))
+        result.summary[f"t_{name}_ms_p95"] = float(np.percentile(a, 95))
+        result.summary[f"t_{name}_ms_p99"] = float(np.percentile(a, 99))
+        result.summary[f"t_{name}_ms_max"] = float(a.max())
 
 
 def run_prequential_direct(

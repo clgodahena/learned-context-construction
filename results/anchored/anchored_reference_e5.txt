@@ -1,0 +1,10 @@
+method                         mean      SD      95% CI            per-seed min..max
+sliding_window (best fixed)    0.8430  0.0267  [0.8271, 0.8585]  0.795..0.887
+learned_policy (plain, E5)     0.8250  0.0298  [0.8077, 0.8420]  0.782..0.866
+anchored_policy (temporal)     0.8441  0.0268  [0.8283, 0.8597]  0.796..0.889
+
+seed-paired vs sliding_window (best fixed):
+  learned_policy (plain, E5)     mean diff -0.0180  wins 1/10  Wilcoxon p=0.037
+  anchored_policy (temporal)     mean diff +0.0011  wins 10/10  Wilcoxon p=0.002
+
+SD(plain) = 0.0298   SD(anchored) = 0.0268
