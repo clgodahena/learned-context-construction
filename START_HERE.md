@@ -32,8 +32,8 @@ special infrastructure.
 ```
 
 A narrated walkthrough of the project (the author's own voice, three levels: overview, technical
-deep-dive, and a single-diagram view) is provided **alongside this archive in the submission
-package** as `24077469_Walkthrough_Combined.mp4`.
+deep-dive, and a single-diagram view) is provided as `media/24077469_Project_Walkthrough.mp4` in the
+repository and under the same name in the submission package.
 
 ## The five-minute path (no GPU, no downloads)
 
@@ -59,7 +59,8 @@ follow **RUNBOOK.md** from the top.
 
 ## Where to look for the results
 
-- `results/report.html` — a self-contained summary of a full run (open in any browser).
+- `results/report.html` — a self-contained summary of a full run (open in any browser; in the
+  submission archive, or rebuild it with `python -m scripts.make_report`).
 - `results/seed_study/stats_report.md` and `stats_cis.png` — the multi-seed confidence intervals
   and paired tests behind the dissertation's central claims.
 - `dashboard/` — run `streamlit run dashboard/app.py` for the interactive results-and-run console

@@ -142,14 +142,15 @@ external-validity benchmarks (**Airlines**, **Covertype**) download from OpenML 
 
 ## Notes
 
-- `results/report.html` is a generated summary of a full run and can be regenerated at any time with
-  `python -m scripts.make_report`.
+- `results/report.html` is a generated, self-contained summary of a full run. It ships in the submission
+  archive and is not committed to the repository; rebuild it at any time with `python -m scripts.make_report`.
 - The **fast reference classifier** (`src/classifiers/reference.py`) is a lightweight scikit-learn
   stand-in used for cheap diagnostics and as the deliberately *weak* substrate; the real runs use
   **TabPFN**. All head-to-head numbers reported in the dissertation use TabPFN.
 - Runs are deterministic given seeds; no network is needed except first-time dataset/model downloads.
-- A narrated walkthrough video (the author's own voice) is provided alongside this archive in the
-  submission package (`24077469_Walkthrough_Combined.mp4`).
+- A narrated walkthrough video (the author's own voice) is provided as
+  `media/24077469_Project_Walkthrough.mp4` in the repository (GitHub offers it as a download rather than
+  an in-page preview because of its size) and under the same name in the submission package.
 
 ## Licence and citation
 

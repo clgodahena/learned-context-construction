@@ -12,7 +12,7 @@ appendix):
 ```bash
 python -m scripts.make_report                                   # results/ -> results/report.html
 python -m scripts.make_report --results results/campaign/laptop
-python -m scripts.make_report --results results/experiments --out report.html
+python -m scripts.make_report --results results/experiments --out results/experiments/report.html
 ```
 
 ## 2. Interactive dashboard (Streamlit, live run console)

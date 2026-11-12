@@ -25,3 +25,7 @@ scikit_learn_data/
 # OS
 .DS_Store
 Thumbs.db
+
+# Generated static reports (rebuild with: python -m scripts.make_report)
+results/report.html
+results/experiments/report.html
