@@ -151,6 +151,19 @@ external-validity benchmarks (**Airlines**, **Covertype**) download from OpenML 
 - A narrated walkthrough video (the author's own voice) is provided alongside this archive in the
   submission package (`24077469_Walkthrough_Combined.mp4`).
 
+## Licence and citation
+
+The code in this repository is released under the MIT Licence (see `LICENSE`). Third-party
+components keep their own licences: TabPFN (package and pretrained weights), River, scikit-learn and
+the other dependencies listed in the `requirements*.txt` files, and the benchmark datasets
+(Electricity, Airlines, Covertype), which are redistributed or downloaded under their original terms.
+
+If you use this work, please cite the dissertation:
+
+> Godahena, C.L. (2026) *Learned Context Construction for In-Context Tabular Models under Concept
+> Drift and Class Imbalance*. MSc Artificial Intelligence dissertation (CS7P01NU), London Metropolitan
+> University. Code: https://github.com/clgodahena/learned-context-construction
+
 ---
 
-*Private academic repository — MSc dissertation artefact (CS7P01NU). All rights reserved.*
+*MSc dissertation artefact (CS7P01NU), London Metropolitan University, 2026.*
