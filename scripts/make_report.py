@@ -3,7 +3,7 @@
 Walks a results directory and bakes every CSV, JSON summary and PNG figure it
 finds into a single self-contained ``report.html`` (images inlined as data URIs,
 CSS inlined). No server and no dependencies beyond the standard library — just
-open the file. Good for sharing with a supervisor and for a thesis appendix.
+open the file. Good for sharing and for a thesis appendix.
 
 Usage:
   python -m scripts.make_report                                   # results/ -> results/report.html

@@ -1,4 +1,4 @@
-"""Third-review analysis: label-delay results and consistent end-to-end timings.
+"""Label-delay results and consistent end-to-end timings.
 
 Reads results/seed_study/runs.csv (blocks D_ref_delay, D_tab_delay, D_tab_timing,
 plus the existing delay-0 TabPFN rows) and writes, under results/seed_study/:
@@ -54,7 +54,7 @@ def main():
     if "label_delay" not in runs.columns:
         runs["label_delay"] = 0
     runs["label_delay"] = runs["label_delay"].fillna(0).astype(int)
-    md = ["# Label delay and end-to-end timing (third review)\n"]
+    md = ["# Label delay and end-to-end timing\n"]
 
     # ------------------------------------------------------------------ #
     # 1. Reference substrate sweep

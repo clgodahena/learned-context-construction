@@ -4,7 +4,7 @@ Consumes ONLY what scripts/run_seed_study.py already saved (runs.csv and the
 per-window trajectories). No model is run here, so this is fast and can be
 re-run any time as more trials complete.
 
-What it produces (and how it answers the two supervisory reviews):
+What it produces:
 
   * Bootstrap 95% confidence intervals of balanced accuracy, AUPRC, temporal
     kappa and minority recall per (stream, method), pooling every seed of a

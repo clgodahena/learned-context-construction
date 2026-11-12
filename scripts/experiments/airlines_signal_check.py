@@ -1,5 +1,5 @@
-"""#5 — Airlines signal diagnostic (supervisor draft-2 feedback; extended for the
-third review: three model families, so the result is not hostage to one learner).
+"""Airlines signal diagnostic (three model families, so the result is not hostage
+to one learner).
 
 This is a DIAGNOSTIC, not a proof of the dataset's signal ceiling: it reports
 what three standard static learners (regularised logistic regression, a random

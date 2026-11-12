@@ -11,7 +11,7 @@
 #   bash scripts/run_weekend.sh                 # all blocks
 #   bash scripts/run_weekend.sh A,B_policy,C_policy   # just the error-bar runs first
 #
-# Recommended first pass (the error bars the supervisor asked for):
+# Recommended first pass (the error-bar runs):
 #   bash scripts/run_weekend.sh A,B_policy,C_policy
 # Then, if time allows (enables the block-level paired tests):
 #   bash scripts/run_weekend.sh B_traj,C_traj

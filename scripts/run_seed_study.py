@@ -1,8 +1,9 @@
-"""Additional seed / statistics study — the supervisor-feedback strengthening runs.
+"""Multi-seed and statistics study.
 
-ONE self-contained, fully resumable driver for every extra run promised in the
-response to the supervisor. It does NOT modify or re-run anything already on
-disk; it writes only under ``results/seed_study/``.
+ONE self-contained, fully resumable driver for the seed study, the matched
+baselines, the anchored policy and the label-delay / timing runs. It does NOT
+modify or re-run anything already on disk; it writes only under
+``results/seed_study/``.
 
 Why this script exists (and is not just another campaign config)
 ----------------------------------------------------------------
@@ -42,7 +43,7 @@ Blocks (choose with --blocks; default = all)
   C_traj    (optional) TabPFN, {airlines, covertype}, fixed selectors + ensembles
             (seed 0) — trajectories if you also want paired tests there.
 
-  --- third-review additions (2026-11-10) ---
+  --- label delay and timings ---
   D_ref_delay   reference substrate, shifting-axis stream, label delay
                 {0, 50, 250, 1000} x {3 fixed, learned_policy, anchored_policy_t}
                 x seeds 0..4 = 100 FAST trials (~20-30 min). Breadth: how every
@@ -56,13 +57,13 @@ Blocks (choose with --blocks; default = all)
   D_tab_timing  TabPFN, Electricity, delay 0, instrumented re-run of 3 fixed
                 (seed 0) + learned_policy seed 0 + anchored_policy_t seed 0 =
                 5 TabPFN trials (~4 h): end-to-end select / infer / update /
-                step timings from ONE procedure at the main setting (review
-                point 6). Optional if time is short; the delay-250 runs carry
+                step timings from ONE procedure at the main setting.
+                Optional if time is short; the delay-250 runs carry
                 the same instrumentation.
 
 Rough cost at ~0.5 s/instance, 6000-step cap (~30–50 min per TabPFN trial):
   A ~<1 h (CPU) · B_policy ~6–8 h · B_traj ~4 h · C_policy ~6–8 h · C_traj ~4 h.
-Run A + the two *_policy blocks first (the error bars the supervisor asked for);
+Run A + the two *_policy blocks first (the error-bar runs);
 add the *_traj blocks if time allows (they enable the block-level paired tests).
 
 Outputs (under results/seed_study/)
@@ -178,7 +179,7 @@ def build_plan(blocks):
             for m in ENSEMBLES:
                 add("B_traj", "tabpfn", stream, "direct", m, 0)
 
-    # --- draft-2 feedback additions (2026-11) ------------------------------ #
+    # --- matched baselines and anchored policy ------------------------------ #
     # #3 Matched synthetic baselines: the synthetic stream is resampled per
     # seed, so a 5-seed policy mean must be compared against fixed/ensemble
     # baselines on the SAME seed-streams. Seed 0 already exists in B_traj, so
@@ -207,7 +208,7 @@ def build_plan(blocks):
             for seed in range(5):
                 add("B_anchor_t", "tabpfn", stream, "in_context", "anchored_policy_t", seed)
 
-    # --- third-review additions (2026-11-10): label delay + timings --------- #
+    # --- label delay + timings ----------------------------------------------- #
     if "D_ref_delay" in blocks:
         for delay in (0, 50, 250, 1000):
             for seed in range(5):
@@ -256,7 +257,7 @@ def selector_cfg(method, seed, substrate):
         base = POLICY_CFG_E5 if substrate == "reference" else POLICY_CFG_TUNED
         return {**base, "seed": seed}
     if method == "anchored_policy":
-        # Supervisor point #4: the anchored policy uses the SAME tuned update
+        # The anchored policy uses the SAME tuned update
         # config as the plain policy on TabPFN, warm-started at the strongest
         # fixed vertex (class_utility = class_ratio, the best fixed rule on both
         # the Electricity and the synthetic primary streams), held near it by a

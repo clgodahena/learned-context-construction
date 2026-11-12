@@ -54,20 +54,19 @@ Wrap-up and campaign:
 
 ## The E5 result (established over ten seeds)
 
-On a single seed it looked as though the policy's verdict *flipped* with the substrate — an apparent
-win on the weak reference substrate (0.822 versus 0.795) and a loss under TabPFN. Re-running the weak
-reference substrate over **ten seeds** removes that win: the policy averages **0.825 versus the best
-fixed rule's 0.843** and beats it in only **1 of 10 seeds** (the originally reported seed). On the
+Over **ten seeds** on the weak reference substrate the policy averages **0.825 versus the best
+fixed rule's 0.843** and beats it in only **1 of 10 seeds**; a single favourable seed can show an
+apparent win (0.822 versus 0.795), which the ten-seed mean does not support. On the
 near-ceiling TabPFN substrate it also does not beat the best fixed rule (for example, Electricity
 0.953 versus 0.959 in the campaign). So the established finding is that the learned policy does **not**
 reliably beat the best fixed rule in **any** regime tested; it matches or slightly trails it and adds
 run-to-run variance. Anchored at a rule it represents exactly (the recency rule) it reproduces that
-rule's accuracy and variance in the settings tested (see the second-review additions below); the class-ratio
+rule's accuracy and variance in the settings tested (see the anchored-policy runs below); the class-ratio
 rule is not representable by the policy and is used directly. (The in-context family as a whole still
 substantially and consistently beats the streaming ensembles; that result is unchanged.) See `results/seed_study/` for the ten-seed data,
 confidence intervals and paired tests, and `RUNBOOK_SEED_STUDY.md` to reproduce them.
 
-## Second-review additions (anchored policy, Airlines signal check)
+## Anchored policy and Airlines signal check
 
 ```
 A1. python -m scripts.experiments.exp_anchored           # reference substrate, 10 seeds, CPU, ~25 min:
@@ -87,10 +86,10 @@ S1. python -m scripts.experiments.airlines_signal_check  # static gradient-boost
   corners only.
 - **S1 result:** a static gradient-boosted model reaches about 0.60 balanced accuracy / 0.66 AUROC even
   with leak-safe target encoding of the high-cardinality categoricals and a 120,000-row sample. Read as a
-  diagnostic (see the third-review extension below), not as the dataset's signal ceiling. Output:
+  diagnostic (see the three-model extension below), not as the dataset's signal ceiling. Output:
   `results/airlines_check/`.
 
-## Third-review additions (label delay, consistent timings, Airlines with three models)
+## Label delay, consistent timings, and Airlines with three models
 
 ```
 R3. bash scripts/run_round3.sh                           # one command, resumable; runs:
@@ -103,11 +102,10 @@ R4. python -m scripts.analysis.delay_report              # tables: accuracy vs d
                                                          #   per-stage timings from one procedure
 ```
 
-- **Semantics fixed first.** `label_delay` now defers the policy's feedback update to the moment the label
+- **Delay semantics.** `label_delay` defers the policy's feedback update to the moment the label
   is released (credited to the exploration sample captured at prediction time, `capture_update_state`),
-  as well as delaying buffer entry. Previously only buffer entry was delayed. `tests/test_delay_timing.py`
-  covers both behaviours and the timing fields; delay-0 results are unchanged (checked old vs new code,
-  identical to the last digit).
+  as well as delaying buffer entry. `tests/test_delay_timing.py` covers both behaviours and the timing
+  fields; at delay 0 the results are identical to the immediate-label runs.
 - **Timings.** `run_prequential(time_it=True)` records select / infer / update / step per scored instance
   with `time.perf_counter` in the same loop; `runs.csv` carries `t_<stage>_ms_{mean,p50,p95,p99,max}`
   (older rows have blanks; the file is migrated in place with a `.bak_*` copy).

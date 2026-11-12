@@ -1,6 +1,6 @@
 #!/bin/bash
-# Third-review runs (2026-11-10). One command, fully resumable: re-run it any
-# time and finished trials are skipped.
+# Label-delay, timing and Airlines-diagnostic runs. One command, fully resumable:
+# re-run it any time and finished trials are skipped.
 #
 #   bash scripts/run_round3.sh            # from the project root, venv active
 #

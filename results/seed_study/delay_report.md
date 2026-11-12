@@ -1,4 +1,4 @@
-# Label delay and end-to-end timing (third review)
+# Label delay and end-to-end timing
 
 ## 1. Reference substrate, shifting-axis stream: balanced accuracy vs label delay
 

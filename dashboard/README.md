@@ -6,7 +6,7 @@ experiment logic.
 ## 1. Static HTML report (no dependencies, shareable)
 
 Bakes every table and figure under a results folder into one self-contained
-`report.html` (open it in any browser; good for a supervisor or a thesis
+`report.html` (open it in any browser; good for sharing or for a thesis
 appendix):
 
 ```bash

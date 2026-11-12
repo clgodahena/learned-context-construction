@@ -1,5 +1,4 @@
-"""Tests for label-delay semantics and per-stage timing (added 2026-11-10,
-third-review points 5 and 6).
+"""Tests for label-delay semantics and per-stage timing.
 
 Run with:  python -m tests.test_delay_timing
 """

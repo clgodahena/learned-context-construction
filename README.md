@@ -32,17 +32,17 @@ when a simple fixed rule is already enough.
   and −0.07 on Electricity). This is confirmed with non-overlapping confidence intervals and
   dependence-aware window-level tests (Electricity window gap +0.060 windowed accuracy, moving-block
   bootstrap CI [+0.051, +0.068], disjoint-window Wilcoxon p = 0.031 on 6 non-overlapping windows;
-  the naive 23-overlapping-window p ≈ 3e-5 is inflated and no longer quoted).
+  a naive test on the 23 overlapping windows would give p ≈ 3e-5, which is inflated and is not used).
 
-- The learned policy does **not** reliably beat the best fixed rule in any regime tested. A
-  single-seed result on the weak substrate looked like a win (0.822 versus 0.795), but over **ten
-  seeds** the advantage disappears (0.825 versus 0.843, winning in only 1 of 10 seeds); on the
+- The learned policy does **not** reliably beat the best fixed rule in any regime tested. Over **ten
+  seeds** on the weak substrate it averages 0.825 versus the best fixed rule's 0.843, winning in only
+  1 of 10 seeds (a single favourable seed can show 0.822 versus 0.795, which the mean does not support); on the
   near-ceiling TabPFN substrate it also does not beat the best fixed rule (for example, Electricity
   0.953 versus 0.959 in the campaign; on the synthetic stream, with every method matched by seed, it
   trails the best fixed rule by 0.057, losing on 5 of 5 seeds). See `results/seed_study/` for the
   seed data, confidence intervals and paired tests.
 
-- **Anchoring is evaluated, not assumed (second review; wording tightened in the third).** Anchored at a
+- **Anchoring is evaluated, not assumed.** Anchored at a
   rule it represents exactly (the recency rule), with the settings stated below, the policy reproduced that
   rule's accuracy and variance on every seed of the streams tested (Electricity 0.958 vs 0.958, run-to-run
   SD 0.0022 -> 0.0003; seed-for-seed on the synthetic stream; reference substrate 0.844 vs 0.843 over ten
@@ -66,11 +66,10 @@ when a simple fixed rule is already enough.
   accuracy. This is a diagnostic, not a proof of the dataset's signal ceiling; it says the stream carries
   little static signal under these representations (`results/airlines_check/`).
 
-- **Late labels and end-to-end cost (third review).** With `label_delay = d` an instance enters the buffer
+- **Late labels and end-to-end cost.** With `label_delay = d` an instance enters the buffer
   AND the policy's feedback update is applied only d steps after the prediction (credited to the exploration
-  sample that produced it); before 2026-11-10 the update was applied immediately, which did not match the
-  stated semantics. Delay therefore ages every selector's context and additionally slows the policy's
-  adaptation. The harness now times context selection, frozen-model inference and the selector update with
+  sample that produced it). Delay therefore ages every selector's context and additionally slows the policy's
+  adaptation. The harness times context selection, frozen-model inference and the selector update with
   one procedure inside the same run and reports mean / p50 / p95 / p99 / max per stage. Results of the
   delay sweep (reference substrate, delays 0/50/250/1000) and the TabPFN Electricity delay-250 and timing
   runs: `results/seed_study/delay_report.md` (blocks `D_ref_delay`, `D_tab_delay`, `D_tab_timing`;
@@ -89,7 +88,7 @@ when a simple fixed rule is already enough.
 ├── scripts/                   # Experiment runners, campaign driver, report + statistics tools
 │   ├── experiments/           #   E1–E6 investigation scripts (+ the TabPFN probe, exp_anchored.py, airlines_signal_check.py)
 │   ├── analysis/              #   stats_report.py (CIs, paired tests) · delay_report.py (label delay + per-stage timings)
-│   └── run_round3.sh          #   third-review launcher: Airlines (3 models) + seed-study blocks D_ref_delay/D_tab_delay/D_tab_timing
+│   └── run_round3.sh          #   launcher: Airlines diagnostic (3 models) + seed-study blocks D_ref_delay/D_tab_delay/D_tab_timing
 ├── config/                    # YAML experiment / campaign configs
 ├── tests/                     # Smoke, component, streaming, campaign and delay/timing tests (no GPU needed)
 ├── dashboard/                 # Streamlit dashboard (app.py) + screenshots

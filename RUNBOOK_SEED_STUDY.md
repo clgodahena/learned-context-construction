@@ -18,8 +18,8 @@ Run everything from this folder with the venv active. The completed outputs ship
 | More seeds | Reference substrate 3 → **10** seeds (Block A); the TabPFN primary pair and the two external benchmarks 3 → **5** seeds for the learned policy (Blocks B_policy, C_policy) |
 | Confidence intervals + paired tests | Bootstrap 95% confidence intervals and paired Wilcoxon / t-tests (`stats_report.py`) |
 | Non-independence | Pairing by **seed** (primary, balanced accuracy) and by **time-window**; window tests are dependence-aware (moving-block bootstrap, disjoint-window check), because consecutive windows overlap by 75% |
-| Matched synthetic baselines (2nd review) | Block **B_synth5**: fixed selectors + ensembles on synthetic seeds 1–4, so every method is compared on the SAME five seed-streams (the synthetic stream is resampled per seed; the real streams are not) |
-| Anchored policy (2nd review) | Block **B_anchor_t**: the policy anchored at the temporal corner (= sliding window), 5 seeds on Electricity + synthetic. Block **B_anchor** (class-utility corner) is kept as evidence that that corner is degenerate |
+| Matched synthetic baselines | Block **B_synth5**: fixed selectors + ensembles on synthetic seeds 1–4, so every method is compared on the SAME five seed-streams (the synthetic stream is resampled per seed; the real streams are not) |
+| Anchored policy | Block **B_anchor_t**: the policy anchored at the temporal corner (= sliding window), 5 seeds on Electricity + synthetic. Block **B_anchor** (class-utility corner) is kept as evidence that that corner is degenerate |
 
 On the real streams (Electricity, Airlines, Covertype) the fixed selectors and ensembles are deterministic
 and the stream is replayed in its natural order, so they are run at **one seed only** — the seed changes
@@ -61,23 +61,23 @@ primary pair):
 bash scripts/run_weekend.sh B_traj,C_traj
 ```
 
-The second-review blocks (matched synthetic baselines and the anchored policy) are launched the same way:
+The matched-synthetic-baseline and anchored-policy blocks are launched the same way:
 
 ```bash
 caffeinate -i nohup python -m scripts.run_seed_study --blocks B_synth5,B_anchor_t \
-    > results/seed_study/run_draft2.log 2>&1 &
+    > results/seed_study/run_matched_anchored.log 2>&1 &
 ```
 
 (`B_anchor`, the class-utility-anchored run, is optional: it reproduces the collapse described below.)
 
-Third review (label delay + consistent timings), one command:
+Label delay and consistent timings, one command:
 
 ```bash
 bash scripts/run_round3.sh        # Airlines diagnostic (3 models) then D_ref_delay,D_tab_delay,D_tab_timing detached
 python -m scripts.analysis.delay_report     # when run_round3.log says 'finished this pass'
 ```
 
-`label_delay` now defers BOTH buffer entry and the policy's feedback update (credited to the exploration
+`label_delay` defers BOTH buffer entry and the policy's feedback update (credited to the exploration
 sample captured at prediction time); `runs.csv` gains `label_delay` and `t_<stage>_ms_*` timing columns
 (existing rows are migrated in place, backup kept as `runs.csv.bak_*`).
 
@@ -140,9 +140,9 @@ intervals, the paired tests, and the figure reported in the dissertation (Chapte
 | B_synth5 | TabPFN, synthetic, fixed selectors seeds 1–4 (+ ensembles, fast) | 12 TabPFN + 12 fast | ~6 h |
 | B_anchor_t | TabPFN, elec+synth, anchored policy (temporal corner), 5 seeds | 10 TabPFN | ~6 h |
 | B_anchor | TabPFN, elec+synth, anchored policy (class-utility corner), 5 seeds | 10 (collapse, fast) | ~1 h |
-| D_ref_delay | reference, shifting-axis, label delay 0/50/250/1000, 5 selectors, 5 seeds (third review) | 100 fast | ~30 min |
-| D_tab_delay | TabPFN, Electricity, label delay 250: 3 fixed + policy x3 + anchored x3 (third review) | 9 TabPFN | ~7 h |
-| D_tab_timing | TabPFN, Electricity, delay 0, instrumented per-stage timings (third review) | 5 TabPFN | ~4 h |
+| D_ref_delay | reference, shifting-axis, label delay 0/50/250/1000, 5 selectors, 5 seeds | 100 fast | ~30 min |
+| D_tab_delay | TabPFN, Electricity, label delay 250: 3 fixed + policy x3 + anchored x3 | 9 TabPFN | ~7 h |
+| D_tab_timing | TabPFN, Electricity, delay 0, instrumented per-stage timings | 5 TabPFN | ~4 h |
 
 Run **A + B_policy + C_policy** first — that is the error-bar evidence. Add **B_traj / C_traj** to
 upgrade the paired tests from seed-level to window-level on the main streams.
