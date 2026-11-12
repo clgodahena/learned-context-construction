@@ -1,0 +1,2 @@
+# Generated static reports (embedded figures); exclude from the GitHub language statistics
+results/**/*.html linguist-generated=true
