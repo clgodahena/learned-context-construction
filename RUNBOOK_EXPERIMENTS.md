@@ -58,7 +58,7 @@ Over **ten seeds** on the weak reference substrate the policy averages **0.825 v
 fixed rule's 0.843** and beats it in only **1 of 10 seeds**; a single favourable seed can show an
 apparent win (0.822 versus 0.795), which the ten-seed mean does not support. On the
 near-ceiling TabPFN substrate it also does not beat the best fixed rule (for example, Electricity
-0.953 versus 0.959 in the campaign). So the established finding is that the learned policy does **not**
+0.952 versus 0.959 over five seeds). So the established finding is that the learned policy does **not**
 reliably beat the best fixed rule in **any** regime tested; it matches or slightly trails it and adds
 run-to-run variance. Anchored at a rule it represents exactly (the recency rule) it reproduces that
 rule's accuracy and variance in the settings tested (see the anchored-policy runs below); the class-ratio

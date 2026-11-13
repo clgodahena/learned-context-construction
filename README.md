@@ -38,7 +38,7 @@ when a simple fixed rule is already enough.
   seeds** on the weak substrate it averages 0.825 versus the best fixed rule's 0.843, winning in only
   1 of 10 seeds (a single favourable seed can show 0.822 versus 0.795, which the mean does not support); on the
   near-ceiling TabPFN substrate it also does not beat the best fixed rule (for example, Electricity
-  0.953 versus 0.959 in the campaign; on the synthetic stream, with every method matched by seed, it
+  0.952 versus 0.959 over five seeds; on the synthetic stream, with every method matched by seed, it
   trails the best fixed rule by 0.057, losing on 5 of 5 seeds). See `results/seed_study/` for the
   seed data, confidence intervals and paired tests.
 
